@@ -1,4 +1,4 @@
-import { ListParams } from "../dtos/common";
+import { ListParams } from '../dtos/common';
 
 interface PaginationProps {
   page: number;

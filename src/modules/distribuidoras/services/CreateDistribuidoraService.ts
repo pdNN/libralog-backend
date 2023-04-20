@@ -2,7 +2,7 @@ import {
   IDistribuidoraDTO,
   ICreateDistribuidoraDTO,
 } from '../dtos/IDistribuidoraDTO';
-import { AlreadyExistsError } from '@shared/errors/AlreadyExistsError';
+import AppError from '@shared/errors/AppError';
 import DistribuidoraRepository from '../repositories/IDistribuidoraRepository';
 
 interface DistribuidoraCreationRequest extends ICreateDistribuidoraDTO {}
@@ -11,7 +11,7 @@ class CreateDistribuidoraService {
   constructor(private distribuidoraRepository: DistribuidoraRepository) {}
 
   async execute(
-    data: DistribuidoraCreationRequest
+    data: DistribuidoraCreationRequest,
   ): Promise<IDistribuidoraDTO> {
     const { nome_distribuidora, qtd_licencas } = data;
 

@@ -6,7 +6,7 @@ const distribuidoraRouter = Router();
 const distribuidoraController = new DistribuidoraController();
 
 distribuidoraRouter.post('/', (req, res, next) => {
-  distribuidoraController.create(req, res).catch(error => {
+  distribuidoraController.create(req, res).catch((error) => {
     next(error);
   });
 });

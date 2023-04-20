@@ -9,7 +9,7 @@ export function errorHandler(
   err: Error,
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   if (err instanceof AppError) {
     return res
@@ -19,8 +19,8 @@ export function errorHandler(
 
   console.error(
     `[${chalk.red('ERROR')}] ${chalk.gray.bold(
-      format(newDate(), 'dd/MM/yy HH:mm:ss')
-    )} ${err}`
+      format(newDate(), 'dd/MM/yy HH:mm:ss'),
+    )} ${err}`,
   );
 
   if (err instanceof ZodError) {

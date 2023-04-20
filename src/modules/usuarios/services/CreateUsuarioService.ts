@@ -1,5 +1,5 @@
 import { IUsuarioDTO, ICreateUsuarioDTO } from '../dtos/IUsuarioDTO';
-import { AlreadyExistsError } from '@shared/errors/AlreadyExistsError';
+import AppError from '@shared/errors/AppError';
 import UsuariosRepository from '../repositories/IUsuariosRepository';
 
 interface IUsuarioCreateRequest extends ICreateUsuarioDTO {}

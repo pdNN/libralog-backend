@@ -15,12 +15,12 @@ class DistribuidoraController {
     });
 
     const { nome_distribuidora, qtd_licencas } = distribuidoraBody.parse(
-      req.body
+      req.body,
     );
 
     const distribuidoraRepository = new DistribuidoraRepository();
     const createDistribuidora = new CreateDistribuidoraService(
-      distribuidoraRepository
+      distribuidoraRepository,
     );
 
     const distribuidora = await createDistribuidora.execute({

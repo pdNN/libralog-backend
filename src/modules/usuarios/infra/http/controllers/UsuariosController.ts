@@ -17,6 +17,11 @@ class UsuariosController {
         })
         .min(1, { message: 'O e-mail deve ser preenchido.' })
         .email('E-mail inválido.'),
+      cod_perfil: z
+        .number({
+          required_error: 'O perfil é obrigatório.',
+        })
+        .min(0, { message: 'O perfil deve ser preenchido.' }),
       des_senha: z
         .string({
           required_error: 'Senha é obrigatória',
@@ -27,8 +32,13 @@ class UsuariosController {
       }),
     });
 
-    const { nome_usuario, email_usuario, des_senha, cod_distribuidora } =
-      usuarioBody.parse(req.body);
+    const {
+      nome_usuario,
+      email_usuario,
+      des_senha,
+      cod_perfil,
+      cod_distribuidora,
+    } = usuarioBody.parse(req.body);
 
     const usuarioRepository = new UsuariosRepository();
     const createUsuario = new CreateUsuarioService(usuarioRepository);
@@ -37,6 +47,7 @@ class UsuariosController {
       nome_usuario,
       email_usuario,
       des_senha,
+      cod_perfil,
       cod_distribuidora,
     });
 

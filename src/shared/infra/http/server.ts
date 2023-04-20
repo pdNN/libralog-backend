@@ -1,10 +1,12 @@
 import express from 'express';
 import cors from 'cors';
+import 'express-async-errors';
+import chalk from 'chalk';
+import { format } from 'date-fns-tz';
+
 import routes from '@shared/infra/http/routes';
 import { env } from '@shared/env';
 import { errorHandler } from '@shared/errors/errorHandler';
-import chalk from 'chalk';
-import { format } from 'date-fns-tz';
 import { newDate } from '@shared/utils/DateFormat';
 
 const app = express();

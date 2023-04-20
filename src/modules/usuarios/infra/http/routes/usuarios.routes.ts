@@ -1,14 +1,11 @@
 import { Router } from 'express';
 import UsuariosController from '../controllers/UsuariosController';
+import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated';
 
 const usuariosRouter = Router();
 
 const usuariosController = new UsuariosController();
 
-usuariosRouter.post('/', (req, res, next) => {
-  usuariosController.create(req, res).catch((error) => {
-    next(error);
-  });
-});
+usuariosRouter.post('/', ensureAuthenticated(1), usuariosController.create);
 
 export default usuariosRouter;

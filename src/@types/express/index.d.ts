@@ -4,6 +4,7 @@ declare namespace Express {
     usuario: {
       id: number;
       cod_perfil: number;
+      cod_distribuidora: number;
     };
   }
 }

@@ -20,6 +20,16 @@ class UsuariosRepository implements IUsuariosRepository {
 
     return usuario;
   }
+
+  async findByEmail(email_usuario: string): Promise<IUsuarioDTO | null> {
+    const usuario = await prisma.usuario.findFirst({
+      where: {
+        email_usuario,
+      },
+    });
+
+    return usuario;
+  }
 }
 
 export default UsuariosRepository;

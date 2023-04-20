@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import { ZodError } from 'zod';
-import AppError from '@shared/errors/AppError';
 import { format } from 'date-fns-tz';
 import chalk from 'chalk';
+
+import AppError from '@shared/errors/AppError';
 import { newDate } from '@shared/utils/DateFormat';
 
 export function errorHandler(

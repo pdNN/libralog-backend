@@ -1,8 +1,23 @@
-version: "3"
+version: '4'
 
 services:
+  # node:
+  #   container_name: "libralog-backend"
+  #   build: .
+  #   environment:
+  #     - NODE_ENV=prod
+  #   volumes:
+  #     - ./:/home/node/app
+  #   depends_on:
+  #     - mysql
+  #   ports:
+  #     - "3333:3333"
+  #   networks:
+  #     - default
+  #   command: "yarn start"
   pg:
-    image: "bitnami/postgresql:latest"
+    container_name: 'libralog-postgres'
+    image: 'bitnami/postgresql:latest'
     ports:
       - 5432:5432
     environment:

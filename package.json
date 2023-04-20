@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "TZ='utc' tsx watch src/server.ts",
+    "dev": "TZ='utc' tsx watch src/shared/infra/http/server.ts",
     "prod": "node build/server.js",
     "build": "tsup src --out-dir build",
     "lint": "eslint src --ext .ts --fix"
@@ -32,7 +32,10 @@
   },
   "dependencies": {
     "@prisma/client": "^4.12.0",
+    "chalk": "^5.2.0",
     "cors": "^2.8.5",
+    "date-fns": "^2.29.3",
+    "date-fns-tz": "^2.0.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "lodash": "^4.17.21",

@@ -1,7 +1,7 @@
 import {
   IDistribuidoraDTO,
   ICreateDistribuidoraDTO,
-} from '../dtos/IDistribuidoraDTO';
+} from "../dtos/IDistribuidoraDTO";
 
 interface IDistribuidoraRepository {
   create(data: ICreateDistribuidoraDTO): Promise<IDistribuidoraDTO>;

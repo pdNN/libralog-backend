@@ -1,10 +1,10 @@
-import { NextFunction, Request, Response } from 'express';
-import { ZodError } from 'zod';
-import { format } from 'date-fns-tz';
-import chalk from 'chalk';
+import { NextFunction, Request, Response } from "express";
+import { ZodError } from "zod";
+import { format } from "date-fns-tz";
+import chalk from "chalk";
 
-import AppError from '@shared/errors/AppError';
-import { newDate } from '@shared/utils/DateFormat';
+import AppError from "@shared/errors/AppError";
+import { newDate } from "@shared/utils/DateFormat";
 
 export function errorHandler(
   err: Error,
@@ -15,12 +15,12 @@ export function errorHandler(
   if (err instanceof AppError) {
     return res
       .status(err.statusCode)
-      .json({ status: 'error', message: err.message });
+      .json({ status: "error", message: err.message });
   }
 
   console.error(
-    `[${chalk.red('ERROR')}] ${chalk.gray.bold(
-      format(newDate(), 'dd/MM/yy HH:mm:ss'),
+    `[${chalk.red("ERROR")}] ${chalk.gray.bold(
+      format(newDate(), "dd/MM/yy HH:mm:ss"),
     )} ${err}`,
   );
 
@@ -28,11 +28,11 @@ export function errorHandler(
     return res.status(400).send({ errors: err.flatten().fieldErrors });
   }
 
-  if (process.env.NODE_ENV === 'dev') {
-    return res.status(500).json({ status: 'error', message: err });
+  if (process.env.NODE_ENV === "dev") {
+    return res.status(500).json({ status: "error", message: err });
   }
 
   return res
     .status(500)
-    .json({ status: 'error', message: 'Internal server error' });
+    .json({ status: "error", message: "Internal server error" });
 }

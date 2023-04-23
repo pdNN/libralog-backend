@@ -1,8 +1,8 @@
-import { hash } from 'bcryptjs';
+import { hash } from "bcryptjs";
 
-import { IUsuarioDTO, ICreateUsuarioDTO } from '../dtos/IUsuarioDTO';
-import IUsuariosRepository from '../repositories/IUsuariosRepository';
-import AppError from '@shared/errors/AppError';
+import { IUsuarioDTO, ICreateUsuarioDTO } from "../dtos/IUsuarioDTO";
+import IUsuariosRepository from "../repositories/IUsuariosRepository";
+import AppError from "@shared/errors/AppError";
 
 interface IUsuarioCreateRequest extends ICreateUsuarioDTO {}
 
@@ -23,15 +23,15 @@ class CreateUsuarioService {
     );
 
     if (usuarioAlreadyExists) {
-      throw new AppError('E-mail já utilizado por outro usuário', 404);
+      throw new AppError("E-mail já utilizado por outro usuário", 404);
     }
 
-    let des_perfil = 'Inicial';
+    let des_perfil = "Inicial";
     switch (cod_perfil) {
       case 0:
         break;
       case 1:
-        des_perfil = 'Admin';
+        des_perfil = "Admin";
         break;
       default:
         break;

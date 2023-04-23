@@ -1,9 +1,9 @@
-import { prisma } from '@shared/infra/prisma';
+import { prisma } from "@shared/infra/prisma";
 import {
   ICreateDistribuidoraDTO,
   IDistribuidoraDTO,
-} from '../../dtos/IDistribuidoraDTO';
-import IDistribuidoraRepository from '../../repositories/IDistribuidoraRepository';
+} from "../../dtos/IDistribuidoraDTO";
+import IDistribuidoraRepository from "../../repositories/IDistribuidoraRepository";
 
 class DistribuidoraRepository implements IDistribuidoraRepository {
   async create(data: ICreateDistribuidoraDTO): Promise<IDistribuidoraDTO> {

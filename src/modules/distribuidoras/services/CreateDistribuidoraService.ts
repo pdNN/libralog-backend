@@ -1,9 +1,9 @@
 import {
   IDistribuidoraDTO,
   ICreateDistribuidoraDTO,
-} from '../dtos/IDistribuidoraDTO';
-import AppError from '@shared/errors/AppError';
-import DistribuidoraRepository from '../repositories/IDistribuidoraRepository';
+} from "../dtos/IDistribuidoraDTO";
+import AppError from "@shared/errors/AppError";
+import DistribuidoraRepository from "../repositories/IDistribuidoraRepository";
 
 interface DistribuidoraCreationRequest extends ICreateDistribuidoraDTO {}
 

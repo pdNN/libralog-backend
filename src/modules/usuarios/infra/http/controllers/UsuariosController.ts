@@ -1,34 +1,34 @@
-import { Request, Response } from 'express';
-import { z } from 'zod';
-import UsuariosRepository from '../../prisma/UsuariosRepository';
-import CreateUsuarioService from '../../../services/CreateUsuarioService';
+import { Request, Response } from "express";
+import { z } from "zod";
+import UsuariosRepository from "../../prisma/UsuariosRepository";
+import CreateUsuarioService from "../../../services/CreateUsuarioService";
 
 class UsuariosController {
   public async create(req: Request, res: Response): Promise<Response> {
     const usuarioBody = z.object({
       nome_usuario: z
         .string({
-          required_error: 'O nome é obrigatório.',
+          required_error: "O nome é obrigatório.",
         })
-        .min(1, { message: 'O nome deve ser preenchido' }),
+        .min(1, { message: "O nome deve ser preenchido" }),
       email_usuario: z
         .string({
-          required_error: 'O e-mail é obrigatório.',
+          required_error: "O e-mail é obrigatório.",
         })
-        .min(1, { message: 'O e-mail deve ser preenchido.' })
-        .email('E-mail inválido.'),
+        .min(1, { message: "O e-mail deve ser preenchido." })
+        .email("E-mail inválido."),
       cod_perfil: z
         .number({
-          required_error: 'O perfil é obrigatório.',
+          required_error: "O perfil é obrigatório.",
         })
-        .min(0, { message: 'O perfil deve ser preenchido.' }),
+        .min(0, { message: "O perfil deve ser preenchido." }),
       des_senha: z
         .string({
-          required_error: 'Senha é obrigatória',
+          required_error: "Senha é obrigatória",
         })
-        .min(1, { message: 'Senha deve ser preenchida.' }),
+        .min(1, { message: "Senha deve ser preenchida." }),
       cod_distribuidora: z.number({
-        required_error: 'Distribuidora é obrigatória',
+        required_error: "Distribuidora é obrigatória",
       }),
     });
 

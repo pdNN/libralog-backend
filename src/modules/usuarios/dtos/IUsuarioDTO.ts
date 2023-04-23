@@ -1,4 +1,4 @@
-import { IDistribuidoraDTO } from '@modules/distribuidoras/dtos/IDistribuidoraDTO';
+import { IDistribuidoraDTO } from "@modules/distribuidoras/dtos/IDistribuidoraDTO";
 
 export type ICreateUsuarioDTO = {
   nome_usuario: string;

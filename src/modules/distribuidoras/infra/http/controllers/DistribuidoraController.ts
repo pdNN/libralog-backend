@@ -1,16 +1,16 @@
-import { Request, Response } from 'express';
-import { z } from 'zod';
-import DistribuidoraRepository from '../../prisma/DistribuidoraRepository';
-import CreateDistribuidoraService from '../../../services/CreateDistribuidoraService';
+import { Request, Response } from "express";
+import { z } from "zod";
+import DistribuidoraRepository from "../../prisma/DistribuidoraRepository";
+import CreateDistribuidoraService from "../../../services/CreateDistribuidoraService";
 
 class DistribuidoraController {
   public async create(req: Request, res: Response): Promise<Response> {
     const distribuidoraBody = z.object({
       nome_distribuidora: z
         .string({
-          required_error: 'O nome é obrigatório.',
+          required_error: "O nome é obrigatório.",
         })
-        .min(1, { message: 'O nome deve ser preenchido' }),
+        .min(1, { message: "O nome deve ser preenchido" }),
       qtd_licencas: z.number(),
     });
 

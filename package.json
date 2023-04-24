@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "TZ='utc' tsx watch src/shared/infra/http/server.ts",
+    "dev": "tsx watch src/shared/infra/http/server.ts",
     "prod": "node build/server.js",
     "build": "tsup src --out-dir build",
     "lint": "eslint src --ext .ts --fix"

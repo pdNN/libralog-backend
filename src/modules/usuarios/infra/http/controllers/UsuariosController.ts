@@ -1,7 +1,13 @@
 import { Request, Response } from "express";
 import { z } from "zod";
+
 import UsuariosRepository from "../../prisma/UsuariosRepository";
 import CreateUsuarioService from "../../../services/CreateUsuarioService";
+import DistribuidoraRepository from "@modules/distribuidoras/infra/prisma/DistribuidoraRepository";
+import UpdateUsuarioService from "@modules/usuarios/services/UpdateUsuarioService";
+import DeleteUsuarioService from "@modules/usuarios/services/DeleteUsuarioService";
+import GetAllUsuarioService from "@modules/usuarios/services/GetAllUsuarioService";
+import GetOneUsuarioService from "@modules/usuarios/services/GetOneUsuarioService";
 
 class UsuariosController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -41,7 +47,11 @@ class UsuariosController {
     } = usuarioBody.parse(req.body);
 
     const usuarioRepository = new UsuariosRepository();
-    const createUsuario = new CreateUsuarioService(usuarioRepository);
+    const distribuidoraRepository = new DistribuidoraRepository();
+    const createUsuario = new CreateUsuarioService(
+      usuarioRepository,
+      distribuidoraRepository,
+    );
 
     const usuario = await createUsuario.execute({
       nome_usuario,
@@ -52,6 +62,60 @@ class UsuariosController {
     });
 
     return res.status(201).json(usuario);
+  }
+
+  public async update(req: Request, res: Response): Promise<Response> {
+    const { cod_usuario } = req.params;
+    const { nome_usuario, email_usuario, cod_perfil, cod_distribuidora } =
+      req.body;
+
+    const usuarioRepository = new UsuariosRepository();
+    const distribuidoraRepository = new DistribuidoraRepository();
+    const updateUsuario = new UpdateUsuarioService(
+      usuarioRepository,
+      distribuidoraRepository,
+    );
+
+    const usuario = await updateUsuario.execute({
+      cod_usuario: parseInt(cod_usuario),
+      nome_usuario,
+      email_usuario,
+      cod_perfil,
+      cod_distribuidora,
+    });
+
+    return res.status(200).json(usuario);
+  }
+
+  public async getall(req: Request, res: Response): Promise<Response> {
+    const usuarioRepository = new UsuariosRepository();
+    const getAllUsuarios = new GetAllUsuarioService(usuarioRepository);
+
+    const usuarios = await getAllUsuarios.execute();
+
+    return res.status(200).json(usuarios);
+  }
+
+  public async getone(req: Request, res: Response): Promise<Response> {
+    const { cod_usuario } = req.params;
+
+    const usuarioRepository = new UsuariosRepository();
+    const getOneUsuario = new GetOneUsuarioService(usuarioRepository);
+
+    const usuario = await getOneUsuario.execute(parseInt(cod_usuario));
+
+    return res.status(200).json(usuario);
+  }
+
+  public async delete(req: Request, res: Response): Promise<Response> {
+    const { cod_usuario } = req.params;
+
+    const usuariosRepository = new UsuariosRepository();
+    const deleteUsuario = new DeleteUsuarioService(usuariosRepository);
+
+    const usuario = await deleteUsuario.execute(parseInt(cod_usuario));
+
+    return res.status(200).json(usuario);
   }
 }
 

@@ -1,8 +1,9 @@
+import AppError from "@shared/errors/AppError";
+
 import {
   IDistribuidoraDTO,
   ICreateDistribuidoraDTO,
 } from "../dtos/IDistribuidoraDTO";
-import AppError from "@shared/errors/AppError";
 import DistribuidoraRepository from "../repositories/IDistribuidoraRepository";
 
 interface DistribuidoraCreationRequest extends ICreateDistribuidoraDTO {}
@@ -15,12 +16,12 @@ class CreateDistribuidoraService {
   ): Promise<IDistribuidoraDTO> {
     const { nome_distribuidora, qtd_licencas } = data;
 
-    // const songAlreadyExists =
-    //   await this.usuariosRepository.findByTitleAndAuthor(title, author);
+    const distribuidoraAlreadyExists =
+      await this.distribuidoraRepository.findByNome(nome_distribuidora);
 
-    // if (songAlreadyExists) {
-    //   throw new AlreadyExistsError("Song already registered");
-    // }
+    if (distribuidoraAlreadyExists) {
+      throw new AppError("Nome já utilizado por outra distribuidora", 406);
+    }
 
     const distribuidora = await this.distribuidoraRepository.create({
       nome_distribuidora,

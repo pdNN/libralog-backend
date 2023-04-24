@@ -12,4 +12,28 @@ distribuidoraRouter.post(
   distribuidoraController.create,
 );
 
+distribuidoraRouter.put(
+  "/:cod_distribuidora",
+  ensureAuthenticated(1),
+  distribuidoraController.update,
+);
+
+distribuidoraRouter.get(
+  "/",
+  ensureAuthenticated(1),
+  distribuidoraController.getall,
+);
+
+distribuidoraRouter.get(
+  "/:cod_distribuidora",
+  ensureAuthenticated(1),
+  distribuidoraController.getone,
+);
+
+distribuidoraRouter.delete(
+  "/:cod_distribuidora",
+  ensureAuthenticated(1),
+  distribuidoraController.delete,
+);
+
 export default distribuidoraRouter;

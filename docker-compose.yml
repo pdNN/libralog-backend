@@ -1,0 +1,26 @@
+version: '4'
+
+services:
+  # node:
+  #   container_name: "libralog-backend"
+  #   build: .
+  #   environment:
+  #     - NODE_ENV=prod
+  #   volumes:
+  #     - ./:/home/node/app
+  #   depends_on:
+  #     - mysql
+  #   ports:
+  #     - "3333:3333"
+  #   networks:
+  #     - default
+  #   command: "yarn start"
+  pg:
+    container_name: 'libralog-postgres'
+    image: 'bitnami/postgresql:latest'
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRESQL_USERNAME=libralog
+      - POSTGRESQL_PASSWORD=libralogpass
+      - POSTGRESQL_DATABASE=libralog

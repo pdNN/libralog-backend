@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Documentação: https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference
+// Comando para rodar migration: yarn prisma migrate dev
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Distribuidora {
+  cod_distribuidora  Int      @id @default(autoincrement())
+  nome_distribuidora String   @unique
+  qtd_licencas       Int      @default(10)
+  dthr_criacao       DateTime @default(now())
+  dthr_atualizacao   DateTime @updatedAt
+
+  usuarios Usuario[]
+
+  @@index([cod_distribuidora])
+  @@map("distribuidora")
+}
+
+model Usuario {
+  cod_usuario      Int      @id @default(autoincrement())
+  nome_usuario     String
+  email_usuario    String   @unique
+  des_senha        String
+  cod_perfil       Int      @default(0)
+  des_perfil       String   @default("Inicial")
+  dthr_criacao     DateTime @default(now())
+  dthr_atualizacao DateTime @updatedAt
+
+  distribuidora     Distribuidora @relation(fields: [cod_distribuidora], references: [cod_distribuidora], onDelete: Cascade)
+  cod_distribuidora Int
+
+  @@index([cod_usuario, cod_distribuidora])
+  @@map("usuario")
+}

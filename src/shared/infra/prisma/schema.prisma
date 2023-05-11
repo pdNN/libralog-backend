@@ -26,6 +26,28 @@ model Distribuidora {
   @@map("distribuidora")
 }
 
+model Banca {
+  cod_banca          Int      @id @default(autoincrement())
+  nome_banca         String
+  razao_social       String
+  tipo               String
+  contato            String
+  endereco           String
+  numero             String
+  bairro             String
+  cidade             String
+  cep                String
+  telefone           String
+  cnpj               String   @unique
+  insc_estadual      String   @unique
+  email              String
+  dthr_criacao       DateTime @default(now())
+  dthr_atualizacao   DateTime @updatedAt
+
+ @@index([cod_banca])
+  @@map("banca")
+}
+
 model Usuario {
   cod_usuario      Int      @id @default(autoincrement())
   nome_usuario     String

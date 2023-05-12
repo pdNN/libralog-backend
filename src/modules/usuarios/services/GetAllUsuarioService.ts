@@ -7,6 +7,10 @@ class GetAllUsuarioService {
   async execute(): Promise<IUsuarioDTO[]> {
     const usuarios = await this.usuariosRepository.getAll();
 
+    usuarios.forEach((usuario) => {
+      delete usuario.des_senha;
+    });
+
     return usuarios;
   }
 }

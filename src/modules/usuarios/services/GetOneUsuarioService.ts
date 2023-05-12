@@ -15,6 +15,8 @@ class GetOneUsuarioService {
       throw new AppError("Usuário com o código fornecido não existe", 404);
     }
 
+    delete usuario.des_senha;
+
     return usuario;
   }
 }

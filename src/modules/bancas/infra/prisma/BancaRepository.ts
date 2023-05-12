@@ -35,10 +35,24 @@ class BancaRepository implements IBancaRepository {
     return banca;
   }
 
-  async findByNome(nome_banca: string): Promise<IBancaDTO | null> {
+  async findByCnpjOrInscEstadualOrEmail(
+    cod_cnpj?: string,
+    cod_insc_estadual?: string,
+    des_email?: string,
+  ): Promise<IBancaDTO | null> {
     const banca = await prisma.banca.findFirst({
       where: {
-        nome_banca,
+        OR: [
+          {
+            cod_cnpj,
+          },
+          {
+            cod_insc_estadual,
+          },
+          {
+            des_email,
+          },
+        ],
       },
     });
 

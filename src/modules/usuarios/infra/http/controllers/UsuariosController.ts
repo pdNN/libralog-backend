@@ -66,8 +66,21 @@ class UsuariosController {
 
   public async update(req: Request, res: Response): Promise<Response> {
     const { cod_usuario } = req.params;
-    const { nome_usuario, email_usuario, cod_perfil, cod_distribuidora } =
-      req.body;
+    const usuarioBody = z.object({
+      nome_usuario: z.string().optional(),
+      email_usuario: z.string().email("E-mail inválido.").optional(),
+      cod_perfil: z.number().optional(),
+      des_senha: z.string().optional(),
+      cod_distribuidora: z.number().optional(),
+    });
+
+    const {
+      nome_usuario,
+      email_usuario,
+      // des_senha,
+      cod_perfil,
+      cod_distribuidora,
+    } = usuarioBody.parse(req.body);
 
     const usuarioRepository = new UsuariosRepository();
     const distribuidoraRepository = new DistribuidoraRepository();

@@ -15,40 +15,103 @@ class BancaController {
         .string({
           required_error: "O nome é obrigatório.",
         })
-        .min(1, { message: "O nome deve ser preenchido" }),
+        .min(1, { message: "O nome deve ser preenchido." }),
+      des_razao_social: z
+        .string({
+          required_error: "A razão social é obrigatória.",
+        })
+        .min(1, { message: "A razão social deve ser preenchida." }),
+      des_contato: z
+        .string({
+          required_error: "O contato é obrigatório.",
+        })
+        .min(1, { message: "O contato deve ser preenchido." }),
+      des_endereco: z
+        .string({
+          required_error: "O endereço é obrigatório.",
+        })
+        .min(1, { message: "O endereço deve ser preenchido." }),
+      nr_endereco: z
+        .string({
+          required_error: "O número do endereço é obrigatório.",
+        })
+        .min(1, { message: "O número do endereço deve ser preenchido." }),
+      des_bairro: z
+        .string({
+          required_error: "O bairro é obrigatório.",
+        })
+        .min(1, { message: "O bairro deve ser preenchido." }),
+      des_cidade: z
+        .string({
+          required_error: "A cidade é obrigatória.",
+        })
+        .min(1, { message: "A cidade deve ser preenchida." }),
+      nr_cep: z
+        .string({
+          required_error: "O cep é obrigatório.",
+        })
+        .regex(/^\d{5}-\d{3}$/i, { message: "O cep deve ser válido." })
+        .min(1, { message: "O cep deve ser preenchido." }),
+      nr_telefone: z
+        .string({
+          required_error: "O telefone é obrigatório.",
+        })
+        .regex(/^\d{2}\s\d{4,5}-\d{4}$/i, {
+          message: "O telefone deve ser válido.",
+        })
+        .min(1, { message: "O telefone deve ser preenchido." }),
+      cod_cnpj: z
+        .string({
+          required_error: "O cnpj é obrigatório.",
+        })
+        .regex(/^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/i, {
+          message: "O cnpj deve ser válido.",
+        })
+        .min(1, { message: "O cnpj deve ser preenchido." }),
+      cod_insc_estadual: z
+        .string({
+          required_error: "A inscrição estadual é obrigatória.",
+        })
+        .min(1, { message: "A inscrição estadual deve ser preenchida." }),
+      des_email: z
+        .string({
+          required_error: "O email é obrigatório.",
+        })
+        .min(1, { message: "O email deve ser preenchido." })
+        .email("O email deve ser válido."),
     });
 
-    const { nome_banca } = bancaBody.parse(req.body);
-    const { razao_social } = req.body;
-    const { tipo } = req.body;
-    const { contato } = req.body;
-    const { endereco } = req.body;
-    const { numero } = req.body;
-    const { bairro } = req.body;
-    const { cidade } = req.body;
-    const { cep } = req.body;
-    const { telefone } = req.body;
-    const { cnpj } = req.body;
-    const { insc_estadual } = req.body;
-    const { email } = req.body;
+    const {
+      nome_banca,
+      des_razao_social,
+      des_contato,
+      des_endereco,
+      nr_endereco,
+      des_bairro,
+      des_cidade,
+      nr_cep,
+      nr_telefone,
+      cod_cnpj,
+      cod_insc_estadual,
+      des_email,
+    } = bancaBody.parse(req.body);
 
     const bancaRepository = new BancaRepository();
     const createBanca = new CreateBancaService(bancaRepository);
 
     const banca = await createBanca.execute({
       nome_banca,
-      razao_social,
-      tipo,
-      contato,
-      endereco,
-      numero,
-      bairro,
-      cidade,
-      cep,
-      telefone,
-      cnpj,
-      insc_estadual,
-      email,
+      des_razao_social,
+      des_contato,
+      des_endereco,
+      nr_endereco,
+      des_bairro,
+      des_cidade,
+      nr_cep,
+      nr_telefone,
+      cod_cnpj,
+      cod_insc_estadual,
+      des_email,
     });
 
     return res.status(201).json(banca);
@@ -56,21 +119,49 @@ class BancaController {
 
   public async update(req: Request, res: Response): Promise<Response> {
     const { cod_banca } = req.params;
+
+    const bancaBody = z.object({
+      nome_banca: z.string().optional(),
+      des_razao_social: z.string().optional(),
+      des_contato: z.string().optional(),
+      des_endereco: z.string().optional(),
+      nr_endereco: z.string().optional(),
+      des_bairro: z.string().optional(),
+      des_cidade: z.string().optional(),
+      nr_cep: z
+        .string()
+        .regex(/^\d{5}-\d{3}$/i, { message: "O cep deve ser válido." })
+        .optional(),
+      nr_telefone: z
+        .string()
+        .regex(/^\d{2}\s\d{4,5}-\d{4}$/i, {
+          message: "O telefone deve ser válido.",
+        })
+        .optional(),
+      cod_cnpj: z
+        .string()
+        .regex(/^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/i, {
+          message: "O cnpj deve ser válido.",
+        })
+        .optional(),
+      cod_insc_estadual: z.string().optional(),
+      des_email: z.string().email("O email deve ser válido.").optional(),
+    });
+
     const {
       nome_banca,
-      razao_social,
-      tipo,
-      contato,
-      endereco,
-      numero,
-      bairro,
-      cidade,
-      cep,
-      telefone,
-      cnpj,
-      insc_estadual,
-      email,
-    } = req.body;
+      des_razao_social,
+      des_contato,
+      des_endereco,
+      nr_endereco,
+      des_bairro,
+      des_cidade,
+      nr_cep,
+      nr_telefone,
+      cod_cnpj,
+      cod_insc_estadual,
+      des_email,
+    } = bancaBody.parse(req.body);
 
     const bancaRepository = new BancaRepository();
     const updatebanca = new UpdateBancaService(bancaRepository);
@@ -78,18 +169,17 @@ class BancaController {
     const banca = await updatebanca.execute({
       cod_banca: parseInt(cod_banca),
       nome_banca,
-      razao_social,
-      tipo,
-      contato,
-      endereco,
-      numero,
-      bairro,
-      cidade,
-      cep,
-      telefone,
-      cnpj,
-      insc_estadual,
-      email,
+      des_razao_social,
+      des_contato,
+      des_endereco,
+      nr_endereco,
+      des_bairro,
+      des_cidade,
+      nr_cep,
+      nr_telefone,
+      cod_cnpj,
+      cod_insc_estadual,
+      des_email,
     });
 
     return res.status(200).json(banca);

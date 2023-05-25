@@ -72,6 +72,9 @@ class UsuariosRepository implements IUsuariosRepository {
       where: {
         email_usuario,
       },
+      include: {
+        perfil: true,
+      },
     });
 
     return usuario;
@@ -91,6 +94,10 @@ class UsuariosRepository implements IUsuariosRepository {
     const usuario = await prisma.usuario.findUnique({
       where: {
         cod_usuario,
+      },
+      include: {
+        distribuidora: true,
+        perfil: true,
       },
     });
 

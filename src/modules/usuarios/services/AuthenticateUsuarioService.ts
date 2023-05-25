@@ -47,9 +47,14 @@ class AuthenticateUsuarioService {
 
     delete usuario.des_senha;
 
+    if (!usuario.perfil) {
+      throw new AppError("Usuário sem perfil", 400);
+    }
+
     const token = sign(
       {
-        cod_perfil: usuario.cod_perfil,
+        permissoes: usuario.perfil.permissoes,
+        nome_perfil: usuario.perfil.nome_perfil,
         cod_distribuidora: usuario.cod_distribuidora,
       },
       secret,

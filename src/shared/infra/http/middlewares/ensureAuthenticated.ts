@@ -8,11 +8,12 @@ interface TokenPayload {
   iat: number;
   exp: number;
   sub: string;
-  cod_perfil: number;
+  permissoes: string[];
+  nome_perfil: string;
   cod_distribuidora: number;
 }
 
-const ensureAuthenticated = (cod_perfil_permitido?: number) => {
+const ensureAuthenticated = (route_permissions?: string[]) => {
   return (req: Request, res: Response, next: NextFunction): void => {
     const authHeader = req.headers.authorization;
 
@@ -29,17 +30,27 @@ const ensureAuthenticated = (cod_perfil_permitido?: number) => {
 
       const decoded = verify(token, authConfig.jwt.secret);
 
-      const { cod_perfil, cod_distribuidora, sub } = decoded as TokenPayload;
+      const { permissoes, nome_perfil, cod_distribuidora, sub } =
+        decoded as TokenPayload;
 
-      if (cod_perfil_permitido) {
-        if (cod_perfil_permitido !== cod_perfil) {
-          throw new AppError("Permissão inválida", 403);
-        }
+      let allowed = true;
+      if (route_permissions && !permissoes.includes("super")) {
+        allowed = false;
+        route_permissions.forEach((permissao) => {
+          if (permissao in permissoes) {
+            allowed = true;
+          }
+        });
+      }
+
+      if (!allowed) {
+        throw new AppError("Usuário não autorizado", 403);
       }
 
       req.usuario = {
         cod_usuario: parseInt(sub),
-        cod_perfil,
+        permissoes,
+        nome_perfil,
         cod_distribuidora,
       };
 
@@ -48,6 +59,7 @@ const ensureAuthenticated = (cod_perfil_permitido?: number) => {
       if (err instanceof AppError) {
         throw err;
       }
+      console.log(err);
       throw new AppError("Token de autenticação inválido", 401);
     }
   };

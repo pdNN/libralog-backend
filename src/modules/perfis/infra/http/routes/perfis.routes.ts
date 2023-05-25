@@ -6,21 +6,33 @@ const perfisRouter = Router();
 
 const perfisController = new PerfisController();
 
-perfisRouter.post("/", ensureAuthenticated(1), perfisController.create);
+perfisRouter.post(
+  "/",
+  ensureAuthenticated(["perfis_editar"]),
+  perfisController.create,
+);
 
-perfisRouter.put("/:cod_perfil", perfisController.update);
+perfisRouter.put(
+  "/:cod_perfil",
+  ensureAuthenticated(["perfis_editar"]),
+  perfisController.update,
+);
 
-perfisRouter.get("/", ensureAuthenticated(1), perfisController.getall);
+perfisRouter.get(
+  "/",
+  ensureAuthenticated(["perfis_visualizar"]),
+  perfisController.getall,
+);
 
 perfisRouter.get(
   "/:cod_perfil",
-  ensureAuthenticated(1),
+  ensureAuthenticated(["perfis_visualizar"]),
   perfisController.getone,
 );
 
 perfisRouter.delete(
   "/:cod_perfil",
-  ensureAuthenticated(1),
+  ensureAuthenticated(["perfis_deletar"]),
   perfisController.delete,
 );
 

@@ -8,6 +8,7 @@ import UpdateUsuarioService from "@modules/usuarios/services/UpdateUsuarioServic
 import DeleteUsuarioService from "@modules/usuarios/services/DeleteUsuarioService";
 import GetAllUsuarioService from "@modules/usuarios/services/GetAllUsuarioService";
 import GetOneUsuarioService from "@modules/usuarios/services/GetOneUsuarioService";
+import PerfisRepository from "@modules/perfis/infra/prisma/PerfisRepository";
 
 class UsuariosController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -27,7 +28,7 @@ class UsuariosController {
         .number({
           required_error: "O perfil é obrigatório.",
         })
-        .min(0, { message: "O perfil deve ser preenchido." }),
+        .min(1, { message: "O perfil deve ser preenchido." }),
       des_senha: z
         .string({
           required_error: "Senha é obrigatória",
@@ -48,9 +49,11 @@ class UsuariosController {
 
     const usuarioRepository = new UsuariosRepository();
     const distribuidoraRepository = new DistribuidoraRepository();
+    const perfisRepository = new PerfisRepository();
     const createUsuario = new CreateUsuarioService(
       usuarioRepository,
       distribuidoraRepository,
+      perfisRepository,
     );
 
     const usuario = await createUsuario.execute({
@@ -84,9 +87,11 @@ class UsuariosController {
 
     const usuarioRepository = new UsuariosRepository();
     const distribuidoraRepository = new DistribuidoraRepository();
+    const perfisRepository = new PerfisRepository();
     const updateUsuario = new UpdateUsuarioService(
       usuarioRepository,
       distribuidoraRepository,
+      perfisRepository,
     );
 
     const usuario = await updateUsuario.execute({

@@ -9,7 +9,7 @@ import { omit } from "lodash";
 
 class UsuariosRepository implements IUsuariosRepository {
   async create(data: ICreateUsuarioDTO): Promise<IUsuarioDTO> {
-    const usuarioData = omit(data, ["cod_distribuidora"]);
+    const usuarioData = omit(data, ["cod_distribuidora", "cod_perfil"]);
 
     const usuario = await prisma.usuario.create({
       data: {
@@ -19,6 +19,11 @@ class UsuariosRepository implements IUsuariosRepository {
             cod_distribuidora: data.cod_distribuidora,
           },
         },
+        perfil: {
+          connect: {
+            cod_perfil: data.cod_perfil,
+          },
+        },
       },
     });
 
@@ -26,7 +31,11 @@ class UsuariosRepository implements IUsuariosRepository {
   }
 
   async updateByCodUsuario(data: IUpdateUsuarioDTO): Promise<IUsuarioDTO> {
-    const usuarioData = omit(data, ["cod_usuario", "cod_distribuidora"]);
+    const usuarioData = omit(data, [
+      "cod_usuario",
+      "cod_distribuidora",
+      "cod_perfil",
+    ]);
 
     const databaseData: any = {
       ...usuarioData,
@@ -36,6 +45,14 @@ class UsuariosRepository implements IUsuariosRepository {
       databaseData.distribuidora = {
         connect: {
           cod_distribuidora: data.cod_distribuidora,
+        },
+      };
+    }
+
+    if (data.cod_perfil) {
+      databaseData.perfil = {
+        connect: {
+          cod_perfil: data.cod_perfil,
         },
       };
     }

@@ -26,18 +26,31 @@ model Distribuidora {
   @@map("distribuidora")
 }
 
+model Perfil {
+  cod_perfil       Int      @id @default(autoincrement())
+  nome_perfil      String   @unique
+  permissoes       String[]
+  dthr_criacao     DateTime @default(now())
+  dthr_atualizacao DateTime @updatedAt
+
+  usuarios Usuario[]
+
+  @@index([cod_perfil])
+  @@map("perfil")
+}
+
 model Usuario {
   cod_usuario      Int      @id @default(autoincrement())
   nome_usuario     String
   email_usuario    String   @unique
   des_senha        String
-  cod_perfil       Int      @default(0)
-  des_perfil       String   @default("Inicial")
   dthr_criacao     DateTime @default(now())
   dthr_atualizacao DateTime @updatedAt
 
   distribuidora     Distribuidora @relation(fields: [cod_distribuidora], references: [cod_distribuidora], onDelete: Cascade)
   cod_distribuidora Int
+  perfil            Perfil        @relation(fields: [cod_perfil], references: [cod_perfil], onDelete: SetDefault)
+  cod_perfil        Int           @default(1)
 
   @@index([cod_usuario, cod_distribuidora])
   @@map("usuario")

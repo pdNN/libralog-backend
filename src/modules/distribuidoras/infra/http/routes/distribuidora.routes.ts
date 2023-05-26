@@ -6,29 +6,33 @@ const distribuidoraRouter = Router();
 
 const distribuidoraController = new DistribuidoraController();
 
-distribuidoraRouter.post("/", distribuidoraController.create);
+distribuidoraRouter.post(
+  "/",
+  ensureAuthenticated(["distribuidoras_editar"]),
+  distribuidoraController.create,
+);
 
 distribuidoraRouter.put(
   "/:cod_distribuidora",
-  ensureAuthenticated(1),
+  ensureAuthenticated(["distribuidoras_editar"]),
   distribuidoraController.update,
 );
 
 distribuidoraRouter.get(
   "/",
-  ensureAuthenticated(1),
+  ensureAuthenticated(["distribuidoras_visualizar"]),
   distribuidoraController.getall,
 );
 
 distribuidoraRouter.get(
   "/:cod_distribuidora",
-  ensureAuthenticated(1),
+  ensureAuthenticated(["distribuidoras_visualizar"]),
   distribuidoraController.getone,
 );
 
 distribuidoraRouter.delete(
   "/:cod_distribuidora",
-  ensureAuthenticated(1),
+  ensureAuthenticated(["distribuidoras_deletar"]),
   distribuidoraController.delete,
 );
 

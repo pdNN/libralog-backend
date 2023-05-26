@@ -8,31 +8,31 @@ const distribuidoraController = new DistribuidoraController();
 
 distribuidoraRouter.post(
   "/",
-  ensureAuthenticated(["distribuidora_editar"]),
+  ensureAuthenticated(["distribuidoras_editar"]),
   distribuidoraController.create,
 );
 
 distribuidoraRouter.put(
   "/:cod_distribuidora",
-  ensureAuthenticated(["distribuidora_editar"]),
+  ensureAuthenticated(["distribuidoras_editar"]),
   distribuidoraController.update,
 );
 
 distribuidoraRouter.get(
   "/",
-  ensureAuthenticated(["distribuidora_visualizar"]),
+  ensureAuthenticated(["distribuidoras_visualizar"]),
   distribuidoraController.getall,
 );
 
 distribuidoraRouter.get(
   "/:cod_distribuidora",
-  ensureAuthenticated(["distribuidora_visualizar"]),
+  ensureAuthenticated(["distribuidoras_visualizar"]),
   distribuidoraController.getone,
 );
 
 distribuidoraRouter.delete(
   "/:cod_distribuidora",
-  ensureAuthenticated(["distribuidora_deletar"]),
+  ensureAuthenticated(["distribuidoras_deletar"]),
   distribuidoraController.delete,
 );
 

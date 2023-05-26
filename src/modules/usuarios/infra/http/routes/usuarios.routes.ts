@@ -8,31 +8,31 @@ const usuariosController = new UsuariosController();
 
 usuariosRouter.post(
   "/",
-  ensureAuthenticated(["perfis_editar"]),
+  ensureAuthenticated(["usuarios_editar"]),
   usuariosController.create,
 );
 
 usuariosRouter.put(
   "/:cod_usuario",
-  ensureAuthenticated(["perfis_editar"]),
+  ensureAuthenticated(["usuarios_editar"]),
   usuariosController.update,
 );
 
 usuariosRouter.get(
   "/",
-  ensureAuthenticated(["perfis_visualizar"]),
+  ensureAuthenticated(["usuarios_visualizar"]),
   usuariosController.getall,
 );
 
 usuariosRouter.get(
   "/:cod_usuario",
-  ensureAuthenticated(["perfis_visualizar"]),
+  ensureAuthenticated(["usuarios_visualizar"]),
   usuariosController.getone,
 );
 
 usuariosRouter.delete(
   "/:cod_usuario",
-  ensureAuthenticated(["perfis_deletar"]),
+  ensureAuthenticated(["usuarios_deletar"]),
   usuariosController.delete,
 );
 

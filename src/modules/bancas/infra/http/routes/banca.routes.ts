@@ -8,31 +8,31 @@ const bancaController = new BancaController();
 
 bancaRouter.post(
   "/",
-  ensureAuthenticated(["banca_editar"]),
+  ensureAuthenticated(["bancas_editar"]),
   bancaController.create,
 );
 
 bancaRouter.put(
   "/:cod_banca",
-  ensureAuthenticated(["banca_editar"]),
+  ensureAuthenticated(["bancas_editar"]),
   bancaController.update,
 );
 
 bancaRouter.get(
   "/",
-  ensureAuthenticated(["banca_visualizar"]),
+  ensureAuthenticated(["bancas_visualizar"]),
   bancaController.getall,
 );
 
 bancaRouter.get(
   "/:cod_banca",
-  ensureAuthenticated(["banca_visualizar"]),
+  ensureAuthenticated(["bancas_visualizar"]),
   bancaController.getone,
 );
 
 bancaRouter.delete(
   "/:cod_banca",
-  ensureAuthenticated(["banca_deletar"]),
+  ensureAuthenticated(["bancas_deletar"]),
   bancaController.delete,
 );
 

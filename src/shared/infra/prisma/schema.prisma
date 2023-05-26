@@ -63,3 +63,24 @@ model Banca {
   @@index([cod_banca])
   @@map("banca")
 }
+
+model Editora {
+  cod_editora       Int      @id @default(autoincrement())
+  nome_editora      String
+  des_razao_social  String
+  des_contato       String
+  des_endereco      String
+  nr_endereco       String
+  des_bairro        String
+  des_cidade        String
+  nr_cep            String
+  nr_telefone       String
+  cod_cnpj          String   @unique
+  cod_insc_estadual String   @unique
+  des_email         String   @unique
+  dthr_criacao      DateTime @default(now())
+  dthr_atualizacao  DateTime @updatedAt
+
+  @@index([cod_editora])
+  @@map("editora")
+}

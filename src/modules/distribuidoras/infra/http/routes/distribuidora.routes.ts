@@ -6,11 +6,7 @@ const distribuidoraRouter = Router();
 
 const distribuidoraController = new DistribuidoraController();
 
-distribuidoraRouter.post(
-  "/",
-  ensureAuthenticated(1),
-  distribuidoraController.create,
-);
+distribuidoraRouter.post("/", distribuidoraController.create);
 
 distribuidoraRouter.put(
   "/:cod_distribuidora",

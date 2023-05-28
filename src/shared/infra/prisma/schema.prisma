@@ -97,3 +97,22 @@ model Editora {
   @@index([cod_editora])
   @@map("editora")
 }
+
+model Entregador {
+  cod_entregador         Int      @id @default(autoincrement())
+  nome_entregador        String
+  des_endereco      String
+  nr_endereco       String
+  des_bairro        String
+  des_cidade        String
+  nr_cep            String
+  nr_telefone       String
+  cod_cpf           String   @unique
+  cod_cnh           String   @unique
+  des_email         String   
+  dthr_criacao      DateTime @default(now())
+  dthr_atualizacao  DateTime @updatedAt
+
+  @@index([cod_entregador])
+  @@map("entregador")
+}

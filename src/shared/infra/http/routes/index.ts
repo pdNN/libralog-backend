@@ -6,6 +6,7 @@ import distribuidoraRouter from "@modules/distribuidoras/infra/http/routes/distr
 import bancaRouter from "@modules/bancas/infra/http/routes/banca.routes";
 import editorasRouter from "@modules/editoras/infra/http/routes/editora.routes";
 import perfisRouter from "@modules/perfis/infra/http/routes/perfis.routes";
+import entregadorRouter from "@modules/entregadores/infra/http/routes/entregador.routes";
 
 const routes = Router();
 
@@ -16,5 +17,6 @@ routes.use("/perfis", perfisRouter);
 
 routes.use("/distribuidoras", distribuidoraRouter);
 routes.use("/bancas", bancaRouter);
+routes.use("/entregadores", entregadorRouter);
 
 export default routes;

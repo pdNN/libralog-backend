@@ -40,24 +40,24 @@ class EntregadorController {
         .string({
           required_error: "O cep é obrigatório.",
         })
-        .regex(/^\d{5}-\d{3}$/i, { message: "O cep deve ser válido." })
+        // .regex(/^\d{5}-\d{3}$/i, { message: "O cep deve ser válido." })
         .min(1, { message: "O cep deve ser preenchido." }),
       nr_telefone: z
         .string({
           required_error: "O telefone é obrigatório.",
         })
-        .regex(/^\d{2}\s\d{4,5}-\d{4}$/i, {
-          message: "O telefone deve ser válido.",
-        })
+        // .regex(/^\d{2}\s\d{4,5}-\d{4}$/i, {
+        //  message: "O telefone deve ser válido.",
+        // })
         .min(1, { message: "O telefone deve ser preenchido." }),
       cod_cpf: z
         .string({
           required_error: "O CPF é obrigatório.",
         })
-        .regex(/^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/i, {
-          message: "O CPF deve ser válido.",
-        })
-        .min(1, { message: "O cnpj deve ser preenchido." }),
+        // .regex(/^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/i, {
+        //  message: "O CPF deve ser válido.",
+        // })
+        .min(1, { message: "O CPF deve ser preenchido." }),
       cod_cnh: z
         .string({
           required_error: "A CNH é obrigatória.",
@@ -93,10 +93,13 @@ class EntregadorController {
       nr_endereco,
       des_bairro,
       des_cidade,
-      nr_cep,
-      nr_telefone,
-      cod_cpf,
-      cod_cnh,
+      nr_cep: nr_cep.replace(/\.|-/gm, ""),
+      nr_telefone: nr_telefone
+        .replace(/\.|-/gm, "")
+        .replace("/", "")
+        .replace(" ", ""),
+      cod_cpf: cod_cpf.replace(/\.|-/gm, ""),
+      cod_cnh: cod_cnh.replace(/\.|-/gm, ""),
       des_email,
     });
 
@@ -114,19 +117,19 @@ class EntregadorController {
       des_cidade: z.string().optional(),
       nr_cep: z
         .string()
-        .regex(/^\d{5}-\d{3}$/i, { message: "O cep deve ser válido." })
+        // .regex(/^\d{5}-\d{3}$/i, { message: "O cep deve ser válido." })
         .optional(),
       nr_telefone: z
         .string()
-        .regex(/^\d{2}\s\d{4,5}-\d{4}$/i, {
-          message: "O telefone deve ser válido.",
-        })
+        // .regex(/^\d{2}\s\d{4,5}-\d{4}$/i, {
+        //   message: "O telefone deve ser válido.",
+        // })
         .optional(),
       cod_cpf: z
         .string()
-        .regex(/^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/i, {
-          message: "O cpf deve ser válido.",
-        })
+        // .regex(/^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/i, {
+        //  message: "O cpf deve ser válido.",
+        // })
         .optional(),
       cod_cnh: z.string().optional(),
       des_email: z.string().email("O email deve ser válido.").optional(),
@@ -155,10 +158,13 @@ class EntregadorController {
       nr_endereco,
       des_bairro,
       des_cidade,
-      nr_cep,
-      nr_telefone,
-      cod_cpf,
-      cod_cnh,
+      nr_cep: nr_cep.replace(/\.|-/gm, ""),
+      nr_telefone: nr_telefone
+        .replace(/\.|-/gm, "")
+        .replace("/", "")
+        .replace(" ", ""),
+      cod_cpf: cod_cpf.replace(/\.|-/gm, ""),
+      cod_cnh: cod_cnh.replace(/\.|-/gm, ""),
       des_email,
     });
 

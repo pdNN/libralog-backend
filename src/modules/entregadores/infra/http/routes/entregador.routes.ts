@@ -8,31 +8,31 @@ const entregadorController = new EntregadorController();
 
 entregadorRouter.post(
   "/",
-  ensureAuthenticated(["entregadors_editar"]),
+  ensureAuthenticated(["entregadores_editar"]),
   entregadorController.create,
 );
 
 entregadorRouter.put(
   "/:cod_entregador",
-  ensureAuthenticated(["entregadors_editar"]),
+  ensureAuthenticated(["entregadores_editar"]),
   entregadorController.update,
 );
 
 entregadorRouter.get(
   "/",
-  ensureAuthenticated(["entregadors_visualizar"]),
+  ensureAuthenticated(["entregadores_visualizar"]),
   entregadorController.getall,
 );
 
 entregadorRouter.get(
   "/:cod_entregador",
-  ensureAuthenticated(["entregadors_visualizar"]),
+  ensureAuthenticated(["entregadores_visualizar"]),
   entregadorController.getone,
 );
 
 entregadorRouter.delete(
   "/:cod_entregador",
-  ensureAuthenticated(["entregadors_deletar"]),
+  ensureAuthenticated(["entregadores_deletar"]),
   entregadorController.delete,
 );
 

@@ -99,8 +99,8 @@ model Editora {
 }
 
 model Entregador {
-  cod_entregador         Int      @id @default(autoincrement())
-  nome_entregador        String
+  cod_entregador    Int      @id @default(autoincrement())
+  nome_entregador   String
   des_endereco      String
   nr_endereco       String
   des_bairro        String
@@ -109,7 +109,7 @@ model Entregador {
   nr_telefone       String
   cod_cpf           String   @unique
   cod_cnh           String   @unique
-  des_email         String   
+  des_email         String
   dthr_criacao      DateTime @default(now())
   dthr_atualizacao  DateTime @updatedAt
 

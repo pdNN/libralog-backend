@@ -50,23 +50,23 @@ class EditoraController {
         .string({
           required_error: "O cep é obrigatório.",
         })
-        .regex(/^\d{5}-\d{3}$/i, { message: "O cep deve ser válido." })
+        // .regex(/^\d{5}-\d{3}$/i, { message: "O cep deve ser válido." })
         .min(1, { message: "O cep deve ser preenchido." }),
       nr_telefone: z
         .string({
           required_error: "O telefone é obrigatório.",
         })
-        .regex(/^\d{2}\s\d{4,5}-\d{4}$/i, {
-          message: "O telefone deve ser válido.",
-        })
+        // .regex(/^\d{2}\s\d{4,5}-\d{4}$/i, {
+        //  message: "O telefone deve ser válido.",
+        // })
         .min(1, { message: "O telefone deve ser preenchido." }),
       cod_cnpj: z
         .string({
           required_error: "O cnpj é obrigatório.",
         })
-        .regex(/^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/i, {
-          message: "O cnpj deve ser válido.",
-        })
+        // .regex(/^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/i, {
+        //  message: "O cnpj deve ser válido.",
+        // })
         .min(1, { message: "O cnpj deve ser preenchido." }),
       cod_insc_estadual: z
         .string({
@@ -107,10 +107,15 @@ class EditoraController {
       nr_endereco,
       des_bairro,
       des_cidade,
-      nr_cep,
-      nr_telefone,
-      cod_cnpj,
-      cod_insc_estadual,
+      nr_cep: nr_cep.replace(/\.|-/gm, "").replace("/", ""),
+      nr_telefone: nr_telefone
+        .replace(/\.|-/gm, "")
+        .replace("/", "")
+        .replace(" ", ""),
+      cod_cnpj: cod_cnpj.replace(/\.|-/gm, "").replace("/", ""),
+      cod_insc_estadual: cod_insc_estadual
+        .replace(/\.|-/gm, "")
+        .replace("/", ""),
       des_email,
     });
 
@@ -130,19 +135,19 @@ class EditoraController {
       des_cidade: z.string().optional(),
       nr_cep: z
         .string()
-        .regex(/^\d{5}-\d{3}$/i, { message: "O cep deve ser válido." })
+        // .regex(/^\d{5}-\d{3}$/i, { message: "O cep deve ser válido." })
         .optional(),
       nr_telefone: z
         .string()
-        .regex(/^\d{2}\s\d{4,5}-\d{4}$/i, {
-          message: "O telefone deve ser válido.",
-        })
+        // .regex(/^\d{2}\s\d{4,5}-\d{4}$/i, {
+        //  message: "O telefone deve ser válido.",
+        // })
         .optional(),
       cod_cnpj: z
         .string()
-        .regex(/^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/i, {
-          message: "O cnpj deve ser válido.",
-        })
+        // .regex(/^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/i, {
+        //  message: "O cnpj deve ser válido.",
+        // })
         .optional(),
       cod_insc_estadual: z.string().optional(),
       des_email: z.string().email("O email deve ser válido.").optional(),
@@ -175,10 +180,15 @@ class EditoraController {
       nr_endereco,
       des_bairro,
       des_cidade,
-      nr_cep,
-      nr_telefone,
-      cod_cnpj,
-      cod_insc_estadual,
+      nr_cep: nr_cep.replace(/\.|-/gm, "").replace("/", ""),
+      nr_telefone: nr_telefone
+        .replace(/\.|-/gm, "")
+        .replace("/", "")
+        .replace(" ", ""),
+      cod_cnpj: cod_cnpj.replace(/\.|-/gm, "").replace("/", ""),
+      cod_insc_estadual: cod_insc_estadual
+        .replace(/\.|-/gm, "")
+        .replace("/", ""),
       des_email,
     });
 

@@ -6,25 +6,33 @@ const editoraRouter = Router();
 
 const editoraController = new EditoraController();
 
-editoraRouter.post("/", ensureAuthenticated(1), editoraController.create);
+editoraRouter.post(
+  "/",
+  ensureAuthenticated(["editora_editar"]),
+  editoraController.create,
+);
 
 editoraRouter.put(
   "/:cod_editora",
-  ensureAuthenticated(1),
+  ensureAuthenticated(["editoras_editar"]),
   editoraController.update,
 );
 
-editoraRouter.get("/", ensureAuthenticated(1), editoraController.getall);
+editoraRouter.get(
+  "/",
+  ensureAuthenticated(["editoras_visualizar"]),
+  editoraController.getall,
+);
 
 editoraRouter.get(
   "/:cod_editora",
-  ensureAuthenticated(1),
+  ensureAuthenticated(["editoras_visualizar"]),
   editoraController.getone,
 );
 
 editoraRouter.delete(
   "/:cod_editora",
-  ensureAuthenticated(1),
+  ensureAuthenticated(["editoras_deletar"]),
   editoraController.delete,
 );
 

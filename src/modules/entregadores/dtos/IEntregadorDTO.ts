@@ -1,3 +1,5 @@
+import { IBancaDTO } from "@modules/bancas/dtos/IBancaDTO";
+
 export type IUpdateEntregadorDTO = {
   cod_entregador: number;
   nome_entregador?: string;
@@ -39,4 +41,5 @@ export type IEntregadorDTO = {
   des_email: string;
   dthr_criacao: Date;
   dthr_atualizacao: Date;
+  bancas?: IBancaDTO[];
 };

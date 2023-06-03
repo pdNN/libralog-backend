@@ -21,6 +21,8 @@ model Distribuidora {
   dthr_atualizacao   DateTime @updatedAt
 
   usuarios Usuario[]
+  bancas Banca[]
+  editoras Editora[]
 
   @@index([cod_distribuidora])
   @@map("distribuidora")
@@ -73,7 +75,12 @@ model Banca {
   dthr_criacao      DateTime @default(now())
   dthr_atualizacao  DateTime @updatedAt
 
-  @@index([cod_banca])
+  distribuidora     Distribuidora @relation(fields: [cod_distribuidora], references: [cod_distribuidora], onDelete: Cascade)
+  cod_distribuidora Int
+  entregador        Entregador @relation(fields: [cod_entregador], references: [cod_entregador], onDelete: Cascade)
+  cod_entregador Int
+
+  @@index([cod_banca, cod_distribuidora, cod_entregador])
   @@map("banca")
 }
 
@@ -94,7 +101,10 @@ model Editora {
   dthr_criacao      DateTime @default(now())
   dthr_atualizacao  DateTime @updatedAt
 
-  @@index([cod_editora])
+  distribuidora     Distribuidora @relation(fields: [cod_distribuidora], references: [cod_distribuidora], onDelete: Cascade)
+  cod_distribuidora Int
+
+  @@index([cod_editora, cod_distribuidora])
   @@map("editora")
 }
 
@@ -115,4 +125,7 @@ model Entregador {
 
   @@index([cod_entregador])
   @@map("entregador")
+
+  banca Banca[]
+
 }

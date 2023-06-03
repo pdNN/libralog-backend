@@ -2,11 +2,18 @@ import AppError from "@shared/errors/AppError";
 
 import { IBancaDTO, ICreateBancaDTO } from "../dtos/IBancaDTO";
 import BancaRepository from "../repositories/IBancaRepository";
+import IDistribuidoraRepository from "@modules/distribuidoras/repositories/IDistribuidoraRepository";
+import IEntregadorRepository from "@modules/entregadores/repositories/IEntregadorRepository";
+import { number } from "zod";
 
 interface BancaCreationRequest extends ICreateBancaDTO {}
 
 class CreateBancaService {
-  constructor(private bancaRepository: BancaRepository) {}
+  constructor(
+    private bancaRepository: BancaRepository,
+    private distribuidoraRepository: IDistribuidoraRepository,
+    private entregadorRepository: IEntregadorRepository,
+  ) {}
 
   async execute(data: BancaCreationRequest): Promise<IBancaDTO> {
     const {
@@ -22,7 +29,30 @@ class CreateBancaService {
       cod_cnpj,
       cod_insc_estadual,
       des_email,
+      cod_distribuidora,
+      cod_entregador,
     } = data;
+
+    const distribuidora =
+      await this.distribuidoraRepository.getOneByCodDistribuidora(
+        cod_distribuidora,
+      );
+
+    if (!distribuidora) {
+      throw new AppError(
+        `Distribuidora com o código ${cod_distribuidora} não existe`,
+      );
+    }
+
+    const entregador = await this.entregadorRepository.getOneByCodEntregador(
+      cod_entregador,
+    );
+
+    if (!entregador) {
+      throw new AppError(
+        `Entregador com o código ${cod_distribuidora} não existe`,
+      );
+    }
 
     const bancaAlreadyExists =
       await this.bancaRepository.findByCnpjOrInscEstadualOrEmail(
@@ -51,6 +81,8 @@ class CreateBancaService {
       cod_cnpj,
       cod_insc_estadual,
       des_email,
+      cod_distribuidora,
+      cod_entregador,
     });
 
     return banca;

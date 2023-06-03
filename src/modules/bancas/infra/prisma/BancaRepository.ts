@@ -11,17 +11,52 @@ import IBancaRepository from "../../repositories/IBancaRepository";
 
 class BancaRepository implements IBancaRepository {
   async create(data: ICreateBancaDTO): Promise<IBancaDTO> {
+    const bancaData = omit(data, ["cod_distribuidora", "cod_entregador"]);
+
     const banca = await prisma.banca.create({
       data: {
-        ...data,
+        ...bancaData,
+        distribuidora: {
+          connect: {
+            cod_distribuidora: data.cod_distribuidora,
+          },
+        },
+        entregador: {
+          connect: {
+            cod_entregador: data.cod_entregador,
+          },
+        },
       },
     });
-
     return banca;
   }
 
   async updateByCodBanca(data: IUpdateBancaDTO): Promise<IBancaDTO> {
-    const bancaData = omit(data, ["cod_banca"]);
+    const bancaData = omit(data, [
+      "cod_banca",
+      "cod_distribuidora",
+      "cod_entregador",
+    ]);
+
+    const databaseData: any = {
+      ...bancaData,
+    };
+
+    if (data.cod_distribuidora) {
+      databaseData.distribuidora = {
+        connect: {
+          cod_distribuidora: data.cod_distribuidora,
+        },
+      };
+    }
+
+    if (data.cod_entregador) {
+      databaseData.entregador = {
+        connect: {
+          cod_entregador: data.cod_entregador,
+        },
+      };
+    }
 
     const banca = await prisma.banca.update({
       where: {
@@ -71,7 +106,12 @@ class BancaRepository implements IBancaRepository {
 
   async getOneByCodBanca(cod_banca: number): Promise<IBancaDTO | null> {
     const banca = await prisma.banca.findUnique({
-      where: { cod_banca },
+      where: {
+        cod_banca,
+      },
+      include: {
+        distribuidora: true,
+      },
     });
 
     return banca;

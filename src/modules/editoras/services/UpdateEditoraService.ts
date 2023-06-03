@@ -2,11 +2,15 @@ import AppError from "@shared/errors/AppError";
 
 import { IEditoraDTO, IUpdateEditoraDTO } from "../dtos/IEditoraDTO";
 import EditoraRepository from "../repositories/IEditoraRepository";
+import IDistribuidoraRepository from "@modules/distribuidoras/repositories/IDistribuidoraRepository";
 
 interface EditoraUpdateRequest extends IUpdateEditoraDTO {}
 
 class UpdateEditoraService {
-  constructor(private editoraRepository: EditoraRepository) {}
+  constructor(
+    private editoraRepository: EditoraRepository,
+    private distribuidoraRepository: IDistribuidoraRepository,
+  ) {}
 
   async execute(data: EditoraUpdateRequest): Promise<IEditoraDTO> {
     const {
@@ -23,7 +27,21 @@ class UpdateEditoraService {
       cod_cnpj,
       cod_insc_estadual,
       des_email,
+      cod_distribuidora,
     } = data;
+
+    if (cod_distribuidora) {
+      const distribuidora =
+        await this.distribuidoraRepository.getOneByCodDistribuidora(
+          cod_distribuidora,
+        );
+
+      if (!distribuidora) {
+        throw new AppError(
+          `Distribuidora com o código ${cod_distribuidora} não existe`,
+        );
+      }
+    }
 
     if (cod_cnpj || cod_insc_estadual) {
       const editoraAlreadyExists =
@@ -58,6 +76,7 @@ class UpdateEditoraService {
       cod_cnpj,
       cod_insc_estadual,
       des_email,
+      cod_distribuidora,
     });
     return editora;
   }

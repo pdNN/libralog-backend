@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { z } from "zod";
 
 import BancaRepository from "@modules/bancas/infra/prisma/BancaRepository";
+import DistribuidoraRepository from "@modules/distribuidoras/infra/prisma/DistribuidoraRepository";
+import EntregadorRepository from "@modules/entregadores/infra/prisma/EntregadorRepository";
 import CreateBancaService from "@modules/bancas/services/CreateBancaService";
 import UpdateBancaService from "@modules/bancas/services/UpdateBancaService";
 import GetAllBancaService from "@modules/bancas/services/GetAllBancaService";
@@ -79,6 +81,12 @@ class BancaController {
         })
         .min(1, { message: "O email deve ser preenchido." })
         .email("O email deve ser válido."),
+      cod_distribuidora: z.number({
+        required_error: "Distribuidora é obrigatória",
+      }),
+      cod_entregador: z.number({
+        required_error: "Distribuidora é obrigatória",
+      }),
     });
 
     const {
@@ -94,10 +102,18 @@ class BancaController {
       cod_cnpj,
       cod_insc_estadual,
       des_email,
+      cod_distribuidora,
+      cod_entregador,
     } = bancaBody.parse(req.body);
 
     const bancaRepository = new BancaRepository();
-    const createBanca = new CreateBancaService(bancaRepository);
+    const distribuidoraRepository = new DistribuidoraRepository();
+    const entregadorRepository = new EntregadorRepository();
+    const createBanca = new CreateBancaService(
+      bancaRepository,
+      distribuidoraRepository,
+      entregadorRepository,
+    );
 
     const banca = await createBanca.execute({
       nome_banca,
@@ -117,6 +133,8 @@ class BancaController {
         .replace(/\.|-/gm, "")
         .replace("/", ""),
       des_email,
+      cod_distribuidora,
+      cod_entregador,
     });
 
     return res.status(201).json(banca);
@@ -151,6 +169,8 @@ class BancaController {
         .optional(),
       cod_insc_estadual: z.string().optional(),
       des_email: z.string().email("O email deve ser válido.").optional(),
+      cod_distribuidora: z.number().optional(),
+      cod_entregador: z.number().optional(),
     });
 
     const {
@@ -166,10 +186,18 @@ class BancaController {
       cod_cnpj,
       cod_insc_estadual,
       des_email,
+      cod_distribuidora,
+      cod_entregador,
     } = bancaBody.parse(req.body);
 
     const bancaRepository = new BancaRepository();
-    const updatebanca = new UpdateBancaService(bancaRepository);
+    const distribuidoraRepository = new DistribuidoraRepository();
+    const entregadorRepository = new EntregadorRepository();
+    const updatebanca = new UpdateBancaService(
+      bancaRepository,
+      distribuidoraRepository,
+      entregadorRepository,
+    );
 
     const banca = await updatebanca.execute({
       cod_banca: parseInt(cod_banca),
@@ -190,6 +218,8 @@ class BancaController {
         .replace(/\.|-/gm, "")
         .replace("/", ""),
       des_email,
+      cod_distribuidora,
+      cod_entregador,
     });
 
     return res.status(200).json(banca);

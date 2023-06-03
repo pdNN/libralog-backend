@@ -1,3 +1,6 @@
+import { IDistribuidoraDTO } from "@modules/distribuidoras/dtos/IDistribuidoraDTO";
+import { IEntregadorDTO } from "@modules/entregadores/dtos/IEntregadorDTO";
+
 export type IUpdateBancaDTO = {
   cod_banca: number;
   nome_banca?: string;
@@ -12,6 +15,8 @@ export type IUpdateBancaDTO = {
   cod_cnpj?: string;
   cod_insc_estadual?: string;
   des_email?: string;
+  cod_distribuidora?: number;
+  cod_entregador?: number;
 };
 
 export type ICreateBancaDTO = {
@@ -27,6 +32,8 @@ export type ICreateBancaDTO = {
   cod_cnpj: string;
   cod_insc_estadual: string;
   des_email: string;
+  cod_distribuidora?: number;
+  cod_entregador?: number;
 };
 
 export type IBancaDTO = {
@@ -45,4 +52,8 @@ export type IBancaDTO = {
   des_email: string;
   dthr_criacao: Date;
   dthr_atualizacao: Date;
+  distribuidora?: IDistribuidoraDTO;
+  cod_distribuidora?: number;
+  entregador?: IEntregadorDTO;
+  cod_entregador?: number;
 };

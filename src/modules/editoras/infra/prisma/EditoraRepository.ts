@@ -11,12 +11,17 @@ import IEditoraRepository from "../../repositories/IEditoraRepository";
 
 class EditoraRepository implements IEditoraRepository {
   async create(data: ICreateEditoraDTO): Promise<IEditoraDTO> {
+    const editoraData = omit(data, ["cod_distribuidora"]);
     const editora = await prisma.editora.create({
       data: {
-        ...data,
+        ...editoraData,
+        distribuidora: {
+          connect: {
+            cod_distribuidora: data.cod_distribuidora,
+          },
+        },
       },
     });
-
     return editora;
   }
 
@@ -45,7 +50,19 @@ class EditoraRepository implements IEditoraRepository {
   }
 
   async updateByCodEditora(data: IUpdateEditoraDTO): Promise<IEditoraDTO> {
-    const editoraData = omit(data, ["cod_editora"]);
+    const editoraData = omit(data, ["cod_editora", "cod_distribuidora"]);
+
+    const databaseData: any = {
+      ...editoraData,
+    };
+
+    if (data.cod_distribuidora) {
+      databaseData.distribuidora = {
+        connect: {
+          cod_distribuidora: data.cod_distribuidora,
+        },
+      };
+    }
 
     const editora = await prisma.editora.update({
       where: {
@@ -53,16 +70,6 @@ class EditoraRepository implements IEditoraRepository {
       },
       data: {
         ...editoraData,
-      },
-    });
-
-    return editora;
-  }
-
-  async findByNome(nome_editora: string): Promise<IEditoraDTO | null> {
-    const editora = await prisma.editora.findFirst({
-      where: {
-        nome_editora,
       },
     });
 
@@ -83,6 +90,9 @@ class EditoraRepository implements IEditoraRepository {
     const editora = await prisma.editora.findUnique({
       where: {
         cod_editora,
+      },
+      include: {
+        distribuidora: true,
       },
     });
 

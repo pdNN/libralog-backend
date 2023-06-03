@@ -1,3 +1,5 @@
+import { IDistribuidoraDTO } from "@modules/distribuidoras/dtos/IDistribuidoraDTO";
+
 export type IUpdateEditoraDTO = {
   cod_editora: number;
   nome_editora?: string;
@@ -12,6 +14,7 @@ export type IUpdateEditoraDTO = {
   cod_cnpj?: string;
   cod_insc_estadual?: string;
   des_email?: string;
+  cod_distribuidora?: number;
 };
 
 export type ICreateEditoraDTO = {
@@ -27,6 +30,7 @@ export type ICreateEditoraDTO = {
   cod_cnpj: String;
   cod_insc_estadual: String;
   des_email: String;
+  cod_distribuidora: number;
 };
 
 export type IEditoraDTO = {
@@ -45,4 +49,6 @@ export type IEditoraDTO = {
   cod_cnpj: String;
   cod_insc_estadual: String;
   des_email: String;
+  distribuidora?: IDistribuidoraDTO;
+  cod_distribuidora: number;
 };

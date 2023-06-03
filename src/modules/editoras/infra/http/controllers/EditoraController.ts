@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { z } from "zod";
 
 import EditoraRepository from "@modules/editoras/infra/prisma/EditoraRepository";
+import DistribuidoraRepository from "@modules/distribuidoras/infra/prisma/DistribuidoraRepository";
 import CreateEditoraService from "@modules/editoras/services/CreateEditoraService";
 import UpdateEditoraService from "@modules/editoras/services/UpdateEditoraService";
 import GetAllEditoraService from "@modules/editoras/services/GetAllEditoraService";
@@ -79,6 +80,9 @@ class EditoraController {
         })
         .min(1, { message: "O email deve ser preenchido." })
         .email("O email deve ser válido."),
+      cod_distribuidora: z.number({
+        required_error: "Distribuidora é obrigatória",
+      }),
     });
 
     const {
@@ -94,10 +98,15 @@ class EditoraController {
       cod_cnpj,
       cod_insc_estadual,
       des_email,
+      cod_distribuidora,
     } = editoraBody.parse(req.body);
 
     const editoraRepository = new EditoraRepository();
-    const createEditora = new CreateEditoraService(editoraRepository);
+    const distribuidoraRepository = new DistribuidoraRepository();
+    const createEditora = new CreateEditoraService(
+      editoraRepository,
+      distribuidoraRepository,
+    );
 
     const editora = await createEditora.execute({
       nome_editora,
@@ -117,6 +126,7 @@ class EditoraController {
         .replace(/\.|-/gm, "")
         .replace("/", ""),
       des_email,
+      cod_distribuidora,
     });
 
     return res.status(201).json(editora);
@@ -151,6 +161,7 @@ class EditoraController {
         .optional(),
       cod_insc_estadual: z.string().optional(),
       des_email: z.string().email("O email deve ser válido.").optional(),
+      cod_distribuidora: z.number().optional(),
     });
 
     const {
@@ -166,10 +177,15 @@ class EditoraController {
       cod_cnpj,
       cod_insc_estadual,
       des_email,
+      cod_distribuidora,
     } = editoraBody.parse(req.body);
 
     const editoraRepository = new EditoraRepository();
-    const updateEditora = new UpdateEditoraService(editoraRepository);
+    const distribuidoraRepository = new DistribuidoraRepository();
+    const updateEditora = new UpdateEditoraService(
+      editoraRepository,
+      distribuidoraRepository,
+    );
 
     const editora = await updateEditora.execute({
       cod_editora: parseInt(cod_editora),
@@ -190,6 +206,7 @@ class EditoraController {
         .replace(/\.|-/gm, "")
         .replace("/", ""),
       des_email,
+      cod_distribuidora,
     });
 
     return res.status(200).json(editora);

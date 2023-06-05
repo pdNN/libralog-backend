@@ -94,6 +94,19 @@ model Editora {
   dthr_criacao      DateTime @default(now())
   dthr_atualizacao  DateTime @updatedAt
 
+  revistas Revista[]
+
   @@index([cod_editora])
   @@map("editora")
+}
+model Revista {
+  cod_revista       Int @id @default(autoincrement())
+  nome_revista      String
+  cod_edicao_revista Int
+
+  editora     Editora @relation(fields: [cod_editora], references: [cod_editora], onDelete: Cascade)
+  cod_editora Int
+
+  @@index([cod_revista])
+  @@map("revista")
 }

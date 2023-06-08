@@ -8,7 +8,7 @@ const editoraController = new EditoraController();
 
 editoraRouter.post(
   "/",
-  ensureAuthenticated(["editora_editar"]),
+  ensureAuthenticated(["editoras_editar"]),
   editoraController.create,
 );
 

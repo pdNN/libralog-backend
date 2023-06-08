@@ -8,7 +8,7 @@ const editoraController = new EditoraController();
 
 editoraRouter.post(
   "/",
-  ensureAuthenticated(["editora_editar"]),
+  ensureAuthenticated(["editoras_editar"]),
   editoraController.create,
 );
 
@@ -20,19 +20,19 @@ editoraRouter.put(
 
 editoraRouter.get(
   "/",
-  ensureAuthenticated(["editoras_visualizar"]),
+  ensureAuthenticated(["editoras_editar"]),
   editoraController.getall,
 );
 
 editoraRouter.get(
   "/:cod_editora",
-  ensureAuthenticated(["editoras_visualizar"]),
+  ensureAuthenticated(["editoras_editar"]),
   editoraController.getone,
 );
 
 editoraRouter.delete(
   "/:cod_editora",
-  ensureAuthenticated(["editoras_deletar"]),
+  ensureAuthenticated(["editoras_editar"]),
   editoraController.delete,
 );
 

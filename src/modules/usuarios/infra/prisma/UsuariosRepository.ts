@@ -85,6 +85,10 @@ class UsuariosRepository implements IUsuariosRepository {
       orderBy: {
         dthr_atualizacao: "desc",
       },
+      include: {
+        distribuidora: true,
+        perfil: true,
+      },
     });
 
     return usuarios;

@@ -9,6 +9,7 @@ interface TokenPayload {
   exp: number;
   sub: string;
   permissoes: string[];
+  cod_perfil: number;
   nome_perfil: string;
   cod_distribuidora: number;
 }
@@ -30,7 +31,7 @@ const ensureAuthenticated = (route_permissions?: string[]) => {
 
       const decoded = verify(token, authConfig.jwt.secret);
 
-      const { permissoes, nome_perfil, cod_distribuidora, sub } =
+      const { permissoes, cod_perfil, nome_perfil, cod_distribuidora, sub } =
         decoded as TokenPayload;
 
       let allowed = true;
@@ -50,6 +51,7 @@ const ensureAuthenticated = (route_permissions?: string[]) => {
       req.usuario = {
         cod_usuario: parseInt(sub),
         permissoes,
+        cod_perfil,
         nome_perfil,
         cod_distribuidora,
       };

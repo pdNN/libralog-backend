@@ -46,6 +46,21 @@ class PerfisRepository implements IPerfisRepository {
     return perfis;
   }
 
+  async getAllAllowed(cod_perfil?: number): Promise<IPerfilDTO[]> {
+    const perfis = await prisma.perfil.findMany({
+      where: {
+        cod_perfil: {
+          notIn: cod_perfil && cod_perfil !== 1 ? [1] : [],
+        },
+      },
+      orderBy: {
+        dthr_atualizacao: "desc",
+      },
+    });
+
+    return perfis;
+  }
+
   async getOneByCodPerfil(cod_perfil: number): Promise<IPerfilDTO | null> {
     const perfil = await prisma.perfil.findUnique({
       where: {

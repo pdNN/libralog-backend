@@ -13,7 +13,7 @@ distribuidoraRouter.post(
 );
 
 distribuidoraRouter.put(
-  "/:cod_distribuidora",
+  "/distribuidora/:cod_distribuidora",
   ensureAuthenticated(["distribuidoras_editar"]),
   distribuidoraController.update,
 );
@@ -25,13 +25,13 @@ distribuidoraRouter.get(
 );
 
 distribuidoraRouter.get(
-  "/:cod_distribuidora",
+  "/distribuidora/:cod_distribuidora",
   ensureAuthenticated(["distribuidoras_visualizar"]),
   distribuidoraController.getone,
 );
 
 distribuidoraRouter.delete(
-  "/:cod_distribuidora",
+  "/distribuidora/:cod_distribuidora",
   ensureAuthenticated(["distribuidoras_deletar"]),
   distribuidoraController.delete,
 );

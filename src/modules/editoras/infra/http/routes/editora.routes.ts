@@ -13,7 +13,7 @@ editoraRouter.post(
 );
 
 editoraRouter.put(
-  "/:cod_editora",
+  "/editora/:cod_editora",
   ensureAuthenticated(["editoras_editar"]),
   editoraController.update,
 );
@@ -25,13 +25,13 @@ editoraRouter.get(
 );
 
 editoraRouter.get(
-  "/:cod_editora",
+  "/editora/:cod_editora",
   ensureAuthenticated(["editoras_visualizar"]),
   editoraController.getone,
 );
 
 editoraRouter.delete(
-  "/:cod_editora",
+  "/editora/:cod_editora",
   ensureAuthenticated(["editoras_deletar"]),
   editoraController.delete,
 );

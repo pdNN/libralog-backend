@@ -13,7 +13,7 @@ entregadorRouter.post(
 );
 
 entregadorRouter.put(
-  "/:cod_entregador",
+  "/entregador/:cod_entregador",
   ensureAuthenticated(["entregadores_editar"]),
   entregadorController.update,
 );
@@ -25,13 +25,13 @@ entregadorRouter.get(
 );
 
 entregadorRouter.get(
-  "/:cod_entregador",
+  "/entregador/:cod_entregador",
   ensureAuthenticated(["entregadores_visualizar"]),
   entregadorController.getone,
 );
 
 entregadorRouter.delete(
-  "/:cod_entregador",
+  "/entregador/:cod_entregador",
   ensureAuthenticated(["entregadores_deletar"]),
   entregadorController.delete,
 );

@@ -7,6 +7,7 @@ import UpdatePerfilService from "@modules/perfis/services/UpdatePerfilService";
 import DeletePerfilService from "@modules/perfis/services/DeletePerfilService";
 import GetAllPerfilService from "@modules/perfis/services/GetAllPerfisService";
 import GetOnePerfilService from "@modules/perfis/services/GetOnePerfilService";
+import GetAllowedPerfisService from "@modules/perfis/services/GetAllowedPerfisService";
 
 class PerfisController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -59,6 +60,15 @@ class PerfisController {
     const getAllPerfis = new GetAllPerfilService(perfilRepository);
 
     const perfis = await getAllPerfis.execute();
+
+    return res.status(200).json(perfis);
+  }
+
+  public async getallallowed(req: Request, res: Response): Promise<Response> {
+    const perfilRepository = new PerfisRepository();
+    const getAllAllowedPerfis = new GetAllowedPerfisService(perfilRepository);
+
+    const perfis = await getAllAllowedPerfis.execute(req.usuario.cod_perfil);
 
     return res.status(200).json(perfis);
   }

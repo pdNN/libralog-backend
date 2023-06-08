@@ -13,7 +13,7 @@ bancaRouter.post(
 );
 
 bancaRouter.put(
-  "/:cod_banca",
+  "/banca/:cod_banca",
   ensureAuthenticated(["bancas_editar"]),
   bancaController.update,
 );
@@ -25,13 +25,13 @@ bancaRouter.get(
 );
 
 bancaRouter.get(
-  "/:cod_banca",
+  "/banca/:cod_banca",
   ensureAuthenticated(["bancas_visualizar"]),
   bancaController.getone,
 );
 
 bancaRouter.delete(
-  "/:cod_banca",
+  "/banca/:cod_banca",
   ensureAuthenticated(["bancas_deletar"]),
   bancaController.delete,
 );

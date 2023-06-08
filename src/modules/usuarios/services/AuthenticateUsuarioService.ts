@@ -54,6 +54,7 @@ class AuthenticateUsuarioService {
     const token = sign(
       {
         permissoes: usuario.perfil.permissoes,
+        cod_perfil: usuario.perfil.cod_perfil,
         nome_perfil: usuario.perfil.nome_perfil,
         cod_distribuidora: usuario.cod_distribuidora,
       },

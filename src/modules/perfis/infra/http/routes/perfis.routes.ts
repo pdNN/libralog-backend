@@ -13,7 +13,7 @@ perfisRouter.post(
 );
 
 perfisRouter.put(
-  "/:cod_perfil",
+  "/perfil/:cod_perfil",
   ensureAuthenticated(["perfis_editar"]),
   perfisController.update,
 );
@@ -25,13 +25,19 @@ perfisRouter.get(
 );
 
 perfisRouter.get(
-  "/:cod_perfil",
+  "/",
+  ensureAuthenticated(["perfis_visualizar"]),
+  perfisController.getallallowed,
+);
+
+perfisRouter.get(
+  "/perfil/:cod_perfil",
   ensureAuthenticated(["perfis_visualizar"]),
   perfisController.getone,
 );
 
 perfisRouter.delete(
-  "/:cod_perfil",
+  "/perfil/:cod_perfil",
   ensureAuthenticated(["perfis_deletar"]),
   perfisController.delete,
 );

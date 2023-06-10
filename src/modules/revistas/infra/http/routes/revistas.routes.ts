@@ -1,5 +1,5 @@
 import { Router } from "express";
-import RevistasController from "../controllers/RevistasController";
+import RevistasController from "../controllers/RevistaController";
 import ensureAuthenticated from "@shared/infra/http/middlewares/ensureAuthenticated";
 
 const revistasRouter = Router();

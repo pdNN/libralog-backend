@@ -7,7 +7,7 @@ import {
 import IRevistasRepository from "../../repositories/IRevistasRepository";
 import { omit } from "lodash";
 
-class RevistasRepository implements IRevistasRepository {
+class RevistaRepository implements IRevistasRepository {
   async create(data: ICreateRevistaDTO): Promise<IRevistaDTO> {
     const revistaData = omit(data, ["cod_editora"]);
 
@@ -61,13 +61,13 @@ class RevistasRepository implements IRevistasRepository {
   }
 
   async getAll(): Promise<IRevistaDTO[]> {
-    const revistas = await prisma.revista.findMany({
+    const revista = await prisma.revista.findMany({
       orderBy: {
         dthr_atualizacao: "desc",
       },
     });
 
-    return revistas;
+    return revista;
   }
 
   async getOneByCodRevista(cod_revista: number): Promise<IRevistaDTO | null> {
@@ -94,4 +94,4 @@ class RevistasRepository implements IRevistasRepository {
   }
 }
 
-export default RevistasRepository;
+export default RevistaRepository;

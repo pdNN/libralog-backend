@@ -12,7 +12,7 @@ class GetOneRevistaService {
     );
 
     if (!revista) {
-      throw new AppError("Usuário com o código fornecido não existe", 404);
+      throw new AppError("Revista com o código fornecido não existe", 404);
     }
     return revista;
   }

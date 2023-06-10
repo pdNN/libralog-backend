@@ -44,6 +44,7 @@ class RevistasController {
       nome_revista,
       cod_edicao_revista,
       cod_editora,
+      cod_revista,
     });
 
     return res.status(201).json(revista);

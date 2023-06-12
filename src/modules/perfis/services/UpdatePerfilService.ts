@@ -2,6 +2,7 @@ import AppError from "@shared/errors/AppError";
 
 import { IPerfilDTO, IUpdatePerfilDTO } from "../dtos/IPerfisDTO";
 import PerfisRepository from "../repositories/IPerfisRepository";
+import { validate_registred_permission } from "@shared/utils/PermissionModuleList";
 
 interface PerfilUpdateRequest extends IUpdatePerfilDTO {}
 
@@ -23,6 +24,8 @@ class UpdatePerfilService {
         throw new AppError("Nome já utilizado por outro perfil", 406);
       }
     }
+
+    validate_registred_permission(permissoes);
 
     const perfil = await this.perfisRepository.updateByCodPerfil({
       cod_perfil,

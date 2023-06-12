@@ -12,7 +12,7 @@ class CreateRevistaService {
   ) {}
 
   async execute(data: IRevistaCreateRequest): Promise<IRevistaDTO> {
-    const { nome_revista, cod_revista, cod_editora, cod_edicao_revista } = data;
+    const { nome_revista, cod_editora, nr_isbn } = data;
 
     const editora = await this.editoraRepository.getOneByCodEditora(
       cod_editora,
@@ -24,9 +24,8 @@ class CreateRevistaService {
 
     const revista = await this.revistasRepository.create({
       nome_revista,
-      cod_revista,
+      nr_isbn,
       cod_editora,
-      cod_edicao_revista,
     });
 
     return revista;

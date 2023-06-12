@@ -1,7 +1,7 @@
 import AppError from "@shared/errors/AppError";
 
-import { IUsuarioDTO, IUpdateUsuarioDTO } from "../dtos/IUsuarioDTO";
-import UsuariosRepository from "../repositories/IUsuariosRepository";
+import { IUsuarioDTO, IUpdateUsuarioDTO } from "../../dtos/IUsuarioDTO";
+import UsuariosRepository from "../../repositories/IUsuariosRepository";
 import IDistribuidoraRepository from "@modules/distribuidoras/repositories/IDistribuidoraRepository";
 import IPerfisRepository from "@modules/perfis/repositories/IPerfisRepository";
 

@@ -1,5 +1,5 @@
-import { IUsuarioDTO } from "../dtos/IUsuarioDTO";
-import UsuariosRepository from "../repositories/IUsuariosRepository";
+import { IUsuarioDTO } from "../../dtos/IUsuarioDTO";
+import UsuariosRepository from "../../repositories/IUsuariosRepository";
 
 class GetAllUsuarioService {
   constructor(private usuariosRepository: UsuariosRepository) {}

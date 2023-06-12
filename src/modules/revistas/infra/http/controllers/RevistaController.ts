@@ -17,9 +17,9 @@ class RevistasController {
           required_error: "O nome é obrigatório.",
         })
         .min(1, { message: "O nome deve ser preenchido" }),
-      cod_edicao_revista: z
+      nr_isbn: z
         .string({
-          required_error: "O código da edição da revista é obrigatório.",
+          required_error: "O número do isbn é obrigatório.",
         })
         .min(1, {
           message: "O código da edição da revista deve ser preenchido.",
@@ -29,9 +29,7 @@ class RevistasController {
       }),
     });
 
-    const { nome_revista, cod_edicao_revista, cod_editora } = revistaBody.parse(
-      req.body,
-    );
+    const { nome_revista, nr_isbn, cod_editora } = revistaBody.parse(req.body);
 
     const revistaRepository = new RevistasRepository();
     const editoraRepository = new EditoraRepository();
@@ -42,9 +40,8 @@ class RevistasController {
 
     const revista = await createRevista.execute({
       nome_revista,
-      cod_edicao_revista,
+      nr_isbn,
       cod_editora,
-      cod_revista,
     });
 
     return res.status(201).json(revista);
@@ -54,13 +51,11 @@ class RevistasController {
     const { cod_revista } = req.params;
     const revistaBody = z.object({
       nome_revista: z.string().optional(),
-      cod_edicao_revista: z.string().optional(),
+      nr_isbn: z.string().optional(),
       cod_editora: z.number().optional(),
     });
 
-    const { nome_revista, cod_edicao_revista, cod_editora } = revistaBody.parse(
-      req.body,
-    );
+    const { nome_revista, nr_isbn, cod_editora } = revistaBody.parse(req.body);
 
     const revistaRepository = new RevistasRepository();
     const editoraRepository = new EditoraRepository();
@@ -72,7 +67,7 @@ class RevistasController {
     const revista = await updateRevista.execute({
       cod_revista: parseInt(cod_revista),
       nome_revista,
-      cod_edicao_revista,
+      nr_isbn,
       cod_editora,
     });
 

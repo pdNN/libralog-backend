@@ -65,6 +65,9 @@ class RevistaRepository implements IRevistasRepository {
       orderBy: {
         dthr_atualizacao: "desc",
       },
+      include: {
+        editora: true,
+      },
     });
 
     return revista;

@@ -1,7 +1,7 @@
 import AppError from "@shared/errors/AppError";
 
-import { IUsuarioDTO } from "../dtos/IUsuarioDTO";
-import UsuariosRepository from "../repositories/IUsuariosRepository";
+import { IUsuarioDTO } from "../../dtos/IUsuarioDTO";
+import UsuariosRepository from "../../repositories/IUsuariosRepository";
 
 class GetOneUsuarioService {
   constructor(private usuariosRepository: UsuariosRepository) {}

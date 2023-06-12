@@ -2,12 +2,12 @@ import { Request, Response } from "express";
 import { z } from "zod";
 
 import UsuariosRepository from "../../prisma/UsuariosRepository";
-import CreateUsuarioService from "../../../services/CreateUsuarioService";
+import CreateUsuarioService from "../../services/CreateUsuarioService";
 import DistribuidoraRepository from "@modules/distribuidoras/infra/prisma/DistribuidoraRepository";
-import UpdateUsuarioService from "@modules/usuarios/services/UpdateUsuarioService";
-import DeleteUsuarioService from "@modules/usuarios/services/DeleteUsuarioService";
-import GetAllUsuarioService from "@modules/usuarios/services/GetAllUsuarioService";
-import GetOneUsuarioService from "@modules/usuarios/services/GetOneUsuarioService";
+import UpdateUsuarioService from "@modules/usuarios/infra/services/UpdateUsuarioService";
+import DeleteUsuarioService from "@modules/usuarios/infra/services/DeleteUsuarioService";
+import GetAllUsuarioService from "@modules/usuarios/infra/services/GetAllUsuarioService";
+import GetOneUsuarioService from "@modules/usuarios/infra/services/GetOneUsuarioService";
 import PerfisRepository from "@modules/perfis/infra/prisma/PerfisRepository";
 
 class UsuariosController {

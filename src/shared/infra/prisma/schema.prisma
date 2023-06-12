@@ -104,7 +104,7 @@ model Editora {
   distribuidora     Distribuidora @relation(fields: [cod_distribuidora], references: [cod_distribuidora], onDelete: Cascade)
   cod_distribuidora Int
 
-  revista           Revista[]
+  revista Revista[]
 
   @@index([cod_editora, cod_distribuidora])
   @@map("editora")
@@ -132,11 +132,11 @@ model Entregador {
 }
 
 model Revista {
-  cod_revista        Int    @id @default(autoincrement())
-  nome_revista       String
-  cod_edicao_revista String
-  dthr_criacao       DateTime @default(now())
-  dthr_atualizacao   DateTime @updatedAt
+  cod_revista      Int      @id @default(autoincrement())
+  nome_revista     String
+  nr_isbn          String
+  dthr_criacao     DateTime @default(now())
+  dthr_atualizacao DateTime @updatedAt
 
   editora     Editora @relation(fields: [cod_editora], references: [cod_editora], onDelete: Cascade)
   cod_editora Int

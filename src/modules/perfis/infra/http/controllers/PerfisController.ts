@@ -8,6 +8,7 @@ import DeletePerfilService from "@modules/perfis/services/DeletePerfilService";
 import GetAllPerfilService from "@modules/perfis/services/GetAllPerfisService";
 import GetOnePerfilService from "@modules/perfis/services/GetOnePerfilService";
 import GetAllowedPerfisService from "@modules/perfis/services/GetAllowedPerfisService";
+import ListPermissionsModuleService from "@modules/perfis/services/ListPermissionsModuleService";
 
 class PerfisController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -93,6 +94,17 @@ class PerfisController {
     const perfil = await deletePerfil.execute(parseInt(cod_perfil));
 
     return res.status(200).json(perfil);
+  }
+
+  public async listpermissionsmodule(
+    req: Request,
+    res: Response,
+  ): Promise<Response> {
+    const listPermissionsModule = new ListPermissionsModuleService();
+
+    const permissions = await listPermissionsModule.execute();
+
+    return res.status(200).json(permissions);
   }
 }
 

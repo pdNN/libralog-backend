@@ -42,4 +42,10 @@ perfisRouter.delete(
   perfisController.delete,
 );
 
+perfisRouter.get(
+  "/list_permissions",
+  ensureAuthenticated(["perfis_editar", "perfis_visualizar"]),
+  perfisController.listpermissionsmodule,
+);
+
 export default perfisRouter;

@@ -3,6 +3,7 @@ import { verify } from "jsonwebtoken";
 import authConfig from "@config/auth";
 
 import AppError from "@shared/errors/AppError";
+import { validate_registred_permission } from "@shared/utils/PermissionModuleList";
 
 interface TokenPayload {
   iat: number;
@@ -14,8 +15,26 @@ interface TokenPayload {
   cod_distribuidora: number;
 }
 
+const validate_permissions = (
+  user_permissions: string[],
+  route_permissions?: string[],
+) => {
+  let allowed = true;
+  if (route_permissions && !user_permissions.includes("super")) {
+    allowed = false;
+    route_permissions.forEach((permissao) => {
+      if (permissao in user_permissions) {
+        allowed = true;
+      }
+    });
+  }
+  return allowed;
+};
+
 const ensureAuthenticated = (route_permissions?: string[]) => {
   return (req: Request, res: Response, next: NextFunction): void => {
+    validate_registred_permission(route_permissions);
+
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {
@@ -34,15 +53,7 @@ const ensureAuthenticated = (route_permissions?: string[]) => {
       const { permissoes, cod_perfil, nome_perfil, cod_distribuidora, sub } =
         decoded as TokenPayload;
 
-      let allowed = true;
-      if (route_permissions && !permissoes.includes("super")) {
-        allowed = false;
-        route_permissions.forEach((permissao) => {
-          if (permissao in permissoes) {
-            allowed = true;
-          }
-        });
-      }
+      const allowed = validate_permissions(permissoes, route_permissions);
 
       if (!allowed) {
         throw new AppError("Usuário não autorizado", 403);

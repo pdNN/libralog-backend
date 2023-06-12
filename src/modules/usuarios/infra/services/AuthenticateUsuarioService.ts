@@ -4,8 +4,8 @@ import authConfig from "@config/auth";
 
 import AppError from "@shared/errors/AppError";
 
-import { IUsuarioDTO } from "../dtos/IUsuarioDTO";
-import IUsuariosRepository from "../repositories/IUsuariosRepository";
+import { IUsuarioDTO } from "../../dtos/IUsuarioDTO";
+import IUsuariosRepository from "../../repositories/IUsuariosRepository";
 
 interface IRequest {
   email_usuario: string;

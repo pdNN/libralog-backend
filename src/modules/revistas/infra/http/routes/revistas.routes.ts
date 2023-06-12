@@ -13,7 +13,7 @@ revistasRouter.post(
 );
 
 revistasRouter.put(
-  "/:cod_revista",
+  "/revista/:cod_revista",
   ensureAuthenticated(["revistas_editar"]),
   revistasController.update,
 );
@@ -25,13 +25,13 @@ revistasRouter.get(
 );
 
 revistasRouter.get(
-  "/:cod_revista",
+  "/revista/:cod_revista",
   ensureAuthenticated(["revistas_visualizar"]),
   revistasController.getone,
 );
 
 revistasRouter.delete(
-  "/:cod_revista",
+  "/revista/:cod_revista",
   ensureAuthenticated(["revistas_deletar"]),
   revistasController.delete,
 );

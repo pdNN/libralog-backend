@@ -13,7 +13,7 @@ class UpdateRevistaService {
   ) {}
 
   async execute(data: RevistaUpdateRequest): Promise<IRevistaDTO> {
-    const { cod_revista, nome_revista, cod_edicao_revista, cod_editora } = data;
+    const { cod_revista, nome_revista, nr_isbn, cod_editora } = data;
 
     if (cod_editora) {
       const editora = await this.editoraRepository.getOneByCodEditora(
@@ -40,7 +40,7 @@ class UpdateRevistaService {
     const revista = await this.revistasRepository.updateByCodRevista({
       cod_revista,
       nome_revista,
-      cod_edicao_revista,
+      nr_isbn,
       cod_editora,
     });
 

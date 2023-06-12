@@ -1,7 +1,7 @@
 import { hash } from "bcryptjs";
 
-import { IUsuarioDTO, ICreateUsuarioDTO } from "../dtos/IUsuarioDTO";
-import IUsuariosRepository from "../repositories/IUsuariosRepository";
+import { IUsuarioDTO, ICreateUsuarioDTO } from "../../dtos/IUsuarioDTO";
+import IUsuariosRepository from "../../repositories/IUsuariosRepository";
 import AppError from "@shared/errors/AppError";
 import IDistribuidoraRepository from "@modules/distribuidoras/repositories/IDistribuidoraRepository";
 import IPerfisRepository from "@modules/perfis/repositories/IPerfisRepository";

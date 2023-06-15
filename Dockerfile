@@ -1,5 +1,5 @@
 # Pull in the official lightweight version of Node 14.
-FROM node:lts-slim
+FROM node:16.14.2-slim
 
 # Create and change to the app directory.
 WORKDIR /app

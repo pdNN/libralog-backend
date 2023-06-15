@@ -6,25 +6,33 @@ const usuariosRouter = Router();
 
 const usuariosController = new UsuariosController();
 
-usuariosRouter.post("/", ensureAuthenticated(1), usuariosController.create);
+usuariosRouter.post(
+  "/",
+  ensureAuthenticated(["usuarios_editar"]),
+  usuariosController.create,
+);
 
 usuariosRouter.put(
-  "/:cod_usuario",
-  ensureAuthenticated(1),
+  "/usuario/:cod_usuario",
+  ensureAuthenticated(["usuarios_editar"]),
   usuariosController.update,
 );
 
-usuariosRouter.get("/", ensureAuthenticated(1), usuariosController.getall);
+usuariosRouter.get(
+  "/",
+  ensureAuthenticated(["usuarios_visualizar"]),
+  usuariosController.getall,
+);
 
 usuariosRouter.get(
-  "/:cod_usuario",
-  ensureAuthenticated(1),
+  "/usuario/:cod_usuario",
+  ensureAuthenticated(["usuarios_visualizar"]),
   usuariosController.getone,
 );
 
 usuariosRouter.delete(
-  "/:cod_usuario",
-  ensureAuthenticated(1),
+  "/usuario/:cod_usuario",
+  ensureAuthenticated(["usuarios_deletar"]),
   usuariosController.delete,
 );
 

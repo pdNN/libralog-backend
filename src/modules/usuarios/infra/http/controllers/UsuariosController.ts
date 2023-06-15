@@ -2,12 +2,13 @@ import { Request, Response } from "express";
 import { z } from "zod";
 
 import UsuariosRepository from "../../prisma/UsuariosRepository";
-import CreateUsuarioService from "../../../services/CreateUsuarioService";
+import CreateUsuarioService from "../../services/CreateUsuarioService";
 import DistribuidoraRepository from "@modules/distribuidoras/infra/prisma/DistribuidoraRepository";
-import UpdateUsuarioService from "@modules/usuarios/services/UpdateUsuarioService";
-import DeleteUsuarioService from "@modules/usuarios/services/DeleteUsuarioService";
-import GetAllUsuarioService from "@modules/usuarios/services/GetAllUsuarioService";
-import GetOneUsuarioService from "@modules/usuarios/services/GetOneUsuarioService";
+import UpdateUsuarioService from "@modules/usuarios/infra/services/UpdateUsuarioService";
+import DeleteUsuarioService from "@modules/usuarios/infra/services/DeleteUsuarioService";
+import GetAllUsuarioService from "@modules/usuarios/infra/services/GetAllUsuarioService";
+import GetOneUsuarioService from "@modules/usuarios/infra/services/GetOneUsuarioService";
+import PerfisRepository from "@modules/perfis/infra/prisma/PerfisRepository";
 
 class UsuariosController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -27,7 +28,7 @@ class UsuariosController {
         .number({
           required_error: "O perfil é obrigatório.",
         })
-        .min(0, { message: "O perfil deve ser preenchido." }),
+        .min(1, { message: "O perfil deve ser preenchido." }),
       des_senha: z
         .string({
           required_error: "Senha é obrigatória",
@@ -48,9 +49,11 @@ class UsuariosController {
 
     const usuarioRepository = new UsuariosRepository();
     const distribuidoraRepository = new DistribuidoraRepository();
+    const perfisRepository = new PerfisRepository();
     const createUsuario = new CreateUsuarioService(
       usuarioRepository,
       distribuidoraRepository,
+      perfisRepository,
     );
 
     const usuario = await createUsuario.execute({
@@ -66,14 +69,29 @@ class UsuariosController {
 
   public async update(req: Request, res: Response): Promise<Response> {
     const { cod_usuario } = req.params;
-    const { nome_usuario, email_usuario, cod_perfil, cod_distribuidora } =
-      req.body;
+    const usuarioBody = z.object({
+      nome_usuario: z.string().optional(),
+      email_usuario: z.string().email("E-mail inválido.").optional(),
+      cod_perfil: z.number().optional(),
+      des_senha: z.string().optional(),
+      cod_distribuidora: z.number().optional(),
+    });
+
+    const {
+      nome_usuario,
+      email_usuario,
+      // des_senha,
+      cod_perfil,
+      cod_distribuidora,
+    } = usuarioBody.parse(req.body);
 
     const usuarioRepository = new UsuariosRepository();
     const distribuidoraRepository = new DistribuidoraRepository();
+    const perfisRepository = new PerfisRepository();
     const updateUsuario = new UpdateUsuarioService(
       usuarioRepository,
       distribuidoraRepository,
+      perfisRepository,
     );
 
     const usuario = await updateUsuario.execute({

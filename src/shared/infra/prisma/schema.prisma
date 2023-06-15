@@ -21,9 +21,24 @@ model Distribuidora {
   dthr_atualizacao   DateTime @updatedAt
 
   usuarios Usuario[]
+  bancas   Banca[]
+  editoras Editora[]
 
   @@index([cod_distribuidora])
   @@map("distribuidora")
+}
+
+model Perfil {
+  cod_perfil       Int      @id @default(autoincrement())
+  nome_perfil      String   @unique
+  permissoes       String[]
+  dthr_criacao     DateTime @default(now())
+  dthr_atualizacao DateTime @updatedAt
+
+  usuarios Usuario[]
+
+  @@index([cod_perfil])
+  @@map("perfil")
 }
 
 model Usuario {
@@ -31,14 +46,101 @@ model Usuario {
   nome_usuario     String
   email_usuario    String   @unique
   des_senha        String
-  cod_perfil       Int      @default(0)
-  des_perfil       String   @default("Inicial")
   dthr_criacao     DateTime @default(now())
   dthr_atualizacao DateTime @updatedAt
 
   distribuidora     Distribuidora @relation(fields: [cod_distribuidora], references: [cod_distribuidora], onDelete: Cascade)
   cod_distribuidora Int
+  perfil            Perfil        @relation(fields: [cod_perfil], references: [cod_perfil], onDelete: SetDefault)
+  cod_perfil        Int           @default(1)
 
   @@index([cod_usuario, cod_distribuidora])
   @@map("usuario")
+}
+
+model Banca {
+  cod_banca         Int      @id @default(autoincrement())
+  nome_banca        String
+  des_razao_social  String
+  des_contato       String
+  des_endereco      String
+  nr_endereco       String
+  des_bairro        String
+  des_cidade        String
+  nr_cep            String
+  nr_telefone       String
+  cod_cnpj          String   @unique
+  cod_insc_estadual String   @unique
+  des_email         String   @unique
+  dthr_criacao      DateTime @default(now())
+  dthr_atualizacao  DateTime @updatedAt
+
+  distribuidora     Distribuidora @relation(fields: [cod_distribuidora], references: [cod_distribuidora], onDelete: Cascade)
+  cod_distribuidora Int
+  entregador        Entregador    @relation(fields: [cod_entregador], references: [cod_entregador], onDelete: Cascade)
+  cod_entregador    Int
+
+  @@index([cod_banca, cod_distribuidora, cod_entregador])
+  @@map("banca")
+}
+
+model Editora {
+  cod_editora       Int      @id @default(autoincrement())
+  nome_editora      String
+  des_razao_social  String
+  des_contato       String
+  des_endereco      String
+  nr_endereco       String
+  des_bairro        String
+  des_cidade        String
+  nr_cep            String
+  nr_telefone       String
+  cod_cnpj          String   @unique
+  cod_insc_estadual String   @unique
+  des_email         String   @unique
+  dthr_criacao      DateTime @default(now())
+  dthr_atualizacao  DateTime @updatedAt
+
+  distribuidora     Distribuidora @relation(fields: [cod_distribuidora], references: [cod_distribuidora], onDelete: Cascade)
+  cod_distribuidora Int
+
+  revista Revista[]
+
+  @@index([cod_editora, cod_distribuidora])
+  @@map("editora")
+}
+
+model Entregador {
+  cod_entregador   Int      @id @default(autoincrement())
+  nome_entregador  String
+  des_endereco     String
+  nr_endereco      String
+  des_bairro       String
+  des_cidade       String
+  nr_cep           String
+  nr_telefone      String
+  cod_cpf          String   @unique
+  cod_cnh          String   @unique
+  des_email        String
+  dthr_criacao     DateTime @default(now())
+  dthr_atualizacao DateTime @updatedAt
+
+  banca Banca[]
+
+  @@index([cod_entregador])
+  @@map("entregador")
+}
+
+model Revista {
+  cod_revista      Int      @id @default(autoincrement())
+  nome_revista     String
+  nr_isbn          String
+  dthr_criacao     DateTime @default(now())
+  dthr_atualizacao DateTime @updatedAt
+
+  editora     Editora @relation(fields: [cod_editora], references: [cod_editora], onDelete: Cascade)
+  cod_editora Int
+
+  @@index([cod_revista])
+  @@map("revista")
 }

@@ -3,17 +3,40 @@ import { verify } from "jsonwebtoken";
 import authConfig from "@config/auth";
 
 import AppError from "@shared/errors/AppError";
+import { validate_registred_permission } from "@shared/utils/PermissionModuleList";
+import { IDistribuidoraDTO } from "@modules/distribuidoras/dtos/IDistribuidoraDTO";
 
 interface TokenPayload {
   iat: number;
   exp: number;
   sub: string;
+  permissoes: string[];
   cod_perfil: number;
+  nome_perfil: string;
   cod_distribuidora: number;
+  distribuidora: IDistribuidoraDTO;
 }
 
-const ensureAuthenticated = (cod_perfil_permitido?: number) => {
+const validate_permissions = (
+  user_permissions: string[],
+  route_permissions?: string[],
+) => {
+  let allowed = true;
+  if (route_permissions && !user_permissions.includes("super")) {
+    allowed = false;
+    route_permissions.forEach((permissao) => {
+      if (user_permissions.includes(permissao)) {
+        allowed = true;
+      }
+    });
+  }
+  return allowed;
+};
+
+const ensureAuthenticated = (route_permissions?: string[]) => {
   return (req: Request, res: Response, next: NextFunction): void => {
+    validate_registred_permission(route_permissions);
+
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {
@@ -29,18 +52,28 @@ const ensureAuthenticated = (cod_perfil_permitido?: number) => {
 
       const decoded = verify(token, authConfig.jwt.secret);
 
-      const { cod_perfil, cod_distribuidora, sub } = decoded as TokenPayload;
+      const {
+        permissoes,
+        cod_perfil,
+        nome_perfil,
+        cod_distribuidora,
+        distribuidora,
+        sub,
+      } = decoded as TokenPayload;
 
-      if (cod_perfil_permitido) {
-        if (cod_perfil_permitido !== cod_perfil) {
-          throw new AppError("Permissão inválida", 403);
-        }
+      const allowed = validate_permissions(permissoes, route_permissions);
+
+      if (!allowed) {
+        throw new AppError("Usuário não autorizado", 403);
       }
 
       req.usuario = {
         cod_usuario: parseInt(sub),
+        permissoes,
         cod_perfil,
+        nome_perfil,
         cod_distribuidora,
+        distribuidora,
       };
 
       return next();
@@ -48,6 +81,7 @@ const ensureAuthenticated = (cod_perfil_permitido?: number) => {
       if (err instanceof AppError) {
         throw err;
       }
+      console.log(err);
       throw new AppError("Token de autenticação inválido", 401);
     }
   };

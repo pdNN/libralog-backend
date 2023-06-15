@@ -16,10 +16,12 @@ class DistribuidoraController {
           required_error: "O nome é obrigatório.",
         })
         .min(1, { message: "O nome deve ser preenchido" }),
+      qtd_licencas: z.number().optional(),
     });
 
-    const { nome_distribuidora } = distribuidoraBody.parse(req.body);
-    const { qtd_licencas } = req.body;
+    const { nome_distribuidora, qtd_licencas } = distribuidoraBody.parse(
+      req.body,
+    );
 
     const distribuidoraRepository = new DistribuidoraRepository();
     const createDistribuidora = new CreateDistribuidoraService(
@@ -36,7 +38,14 @@ class DistribuidoraController {
 
   public async update(req: Request, res: Response): Promise<Response> {
     const { cod_distribuidora } = req.params;
-    const { nome_distribuidora, qtd_licencas } = req.body;
+
+    const distribuidoraBody = z.object({
+      nome_distribuidora: z.string().optional(),
+      qtd_licencas: z.number().optional(),
+    });
+    const { nome_distribuidora, qtd_licencas } = distribuidoraBody.parse(
+      req.body,
+    );
 
     const distribuidoraRepository = new DistribuidoraRepository();
     const updateDistribuidora = new UpdateDistribuidoraService(

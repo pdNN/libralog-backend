@@ -4,8 +4,8 @@ import authConfig from "@config/auth";
 
 import AppError from "@shared/errors/AppError";
 
-import { IUsuarioDTO } from "../dtos/IUsuarioDTO";
-import IUsuariosRepository from "../repositories/IUsuariosRepository";
+import { IUsuarioDTO } from "../../dtos/IUsuarioDTO";
+import IUsuariosRepository from "../../repositories/IUsuariosRepository";
 
 interface IRequest {
   email_usuario: string;
@@ -47,10 +47,17 @@ class AuthenticateUsuarioService {
 
     delete usuario.des_senha;
 
+    if (!usuario.perfil || !usuario.distribuidora) {
+      throw new AppError("Usuário sem perfil ou distribuidora", 400);
+    }
+
     const token = sign(
       {
-        cod_perfil: usuario.cod_perfil,
+        permissoes: usuario.perfil.permissoes,
+        cod_perfil: usuario.perfil.cod_perfil,
+        nome_perfil: usuario.perfil.nome_perfil,
         cod_distribuidora: usuario.cod_distribuidora,
+        distribuidora: usuario.distribuidora,
       },
       secret,
       {

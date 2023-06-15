@@ -1,8 +1,9 @@
 import AppError from "@shared/errors/AppError";
 
-import { IUsuarioDTO, IUpdateUsuarioDTO } from "../dtos/IUsuarioDTO";
-import UsuariosRepository from "../repositories/IUsuariosRepository";
+import { IUsuarioDTO, IUpdateUsuarioDTO } from "../../dtos/IUsuarioDTO";
+import UsuariosRepository from "../../repositories/IUsuariosRepository";
 import IDistribuidoraRepository from "@modules/distribuidoras/repositories/IDistribuidoraRepository";
+import IPerfisRepository from "@modules/perfis/repositories/IPerfisRepository";
 
 interface UsuarioUpdateRequest extends IUpdateUsuarioDTO {}
 
@@ -10,6 +11,7 @@ class UpdateUsuarioService {
   constructor(
     private usuariosRepository: UsuariosRepository,
     private distribuidoraRepository: IDistribuidoraRepository,
+    private perfilRepository: IPerfisRepository,
   ) {}
 
   async execute(data: UsuarioUpdateRequest): Promise<IUsuarioDTO> {
@@ -47,17 +49,11 @@ class UpdateUsuarioService {
       }
     }
 
-    let des_perfil;
     if (cod_perfil !== undefined) {
-      switch (cod_perfil) {
-        case 0:
-          des_perfil = "Inicial";
-          break;
-        case 1:
-          des_perfil = "Admin";
-          break;
-        default:
-          break;
+      const perfil = await this.perfilRepository.getOneByCodPerfil(cod_perfil);
+
+      if (!perfil) {
+        throw new AppError(`Perfil com o código ${cod_perfil} não existe`);
       }
     }
 
@@ -66,7 +62,6 @@ class UpdateUsuarioService {
       nome_usuario,
       email_usuario,
       cod_perfil,
-      des_perfil,
       cod_distribuidora,
     });
 

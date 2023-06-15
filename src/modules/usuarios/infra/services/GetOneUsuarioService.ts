@@ -1,7 +1,7 @@
 import AppError from "@shared/errors/AppError";
 
-import { IUsuarioDTO } from "../dtos/IUsuarioDTO";
-import UsuariosRepository from "../repositories/IUsuariosRepository";
+import { IUsuarioDTO } from "../../dtos/IUsuarioDTO";
+import UsuariosRepository from "../../repositories/IUsuariosRepository";
 
 class GetOneUsuarioService {
   constructor(private usuariosRepository: UsuariosRepository) {}
@@ -14,6 +14,8 @@ class GetOneUsuarioService {
     if (!usuario) {
       throw new AppError("Usuário com o código fornecido não existe", 404);
     }
+
+    delete usuario.des_senha;
 
     return usuario;
   }

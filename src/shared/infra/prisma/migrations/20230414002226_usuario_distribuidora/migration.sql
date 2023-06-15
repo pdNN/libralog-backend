@@ -36,3 +36,4 @@ CREATE INDEX "usuario_cod_usuario_cod_distribuidora_idx" ON "usuario"("cod_usuar
 
 -- AddForeignKey
 ALTER TABLE "usuario" ADD CONSTRAINT "usuario_cod_distribuidora_fkey" FOREIGN KEY ("cod_distribuidora") REFERENCES "distribuidora"("cod_distribuidora") ON DELETE CASCADE ON UPDATE CASCADE;
+

@@ -1,4 +1,6 @@
 import { IUsuarioDTO } from "@modules/usuarios/dtos/IUsuarioDTO";
+import { IBancaDTO } from "@modules/bancas/dtos/IBancaDTO";
+import { IEditoraDTO } from "@modules/editoras/dtos/IEditoraDTO";
 
 export type IUpdateDistribuidoraDTO = {
   cod_distribuidora: number;
@@ -18,4 +20,6 @@ export type IDistribuidoraDTO = {
   dthr_criacao: Date;
   dthr_atualizacao: Date;
   usuarios?: IUsuarioDTO[];
+  bancas?: IBancaDTO[];
+  editoras?: IEditoraDTO[];
 };

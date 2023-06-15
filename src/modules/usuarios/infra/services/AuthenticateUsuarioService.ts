@@ -47,8 +47,8 @@ class AuthenticateUsuarioService {
 
     delete usuario.des_senha;
 
-    if (!usuario.perfil) {
-      throw new AppError("Usuário sem perfil", 400);
+    if (!usuario.perfil || !usuario.distribuidora) {
+      throw new AppError("Usuário sem perfil ou distribuidora", 400);
     }
 
     const token = sign(
@@ -57,6 +57,7 @@ class AuthenticateUsuarioService {
         cod_perfil: usuario.perfil.cod_perfil,
         nome_perfil: usuario.perfil.nome_perfil,
         cod_distribuidora: usuario.cod_distribuidora,
+        distribuidora: usuario.distribuidora,
       },
       secret,
       {

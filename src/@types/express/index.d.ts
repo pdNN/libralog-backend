@@ -7,6 +7,13 @@ declare namespace Express {
       cod_perfil: number;
       nome_perfil: string;
       cod_distribuidora: number;
+      distribuidora: {
+        cod_distribuidora: number;
+        nome_distribuidora: string;
+        qtd_licencas: number;
+        dthr_criacao: Date;
+        dthr_atualizacao: Date;
+      };
     };
   }
 }

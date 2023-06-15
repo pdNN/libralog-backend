@@ -4,6 +4,7 @@ import authConfig from "@config/auth";
 
 import AppError from "@shared/errors/AppError";
 import { validate_registred_permission } from "@shared/utils/PermissionModuleList";
+import { IDistribuidoraDTO } from "@modules/distribuidoras/dtos/IDistribuidoraDTO";
 
 interface TokenPayload {
   iat: number;
@@ -13,6 +14,7 @@ interface TokenPayload {
   cod_perfil: number;
   nome_perfil: string;
   cod_distribuidora: number;
+  distribuidora: IDistribuidoraDTO;
 }
 
 const validate_permissions = (
@@ -23,7 +25,7 @@ const validate_permissions = (
   if (route_permissions && !user_permissions.includes("super")) {
     allowed = false;
     route_permissions.forEach((permissao) => {
-      if (permissao in user_permissions) {
+      if (user_permissions.includes(permissao)) {
         allowed = true;
       }
     });
@@ -50,8 +52,14 @@ const ensureAuthenticated = (route_permissions?: string[]) => {
 
       const decoded = verify(token, authConfig.jwt.secret);
 
-      const { permissoes, cod_perfil, nome_perfil, cod_distribuidora, sub } =
-        decoded as TokenPayload;
+      const {
+        permissoes,
+        cod_perfil,
+        nome_perfil,
+        cod_distribuidora,
+        distribuidora,
+        sub,
+      } = decoded as TokenPayload;
 
       const allowed = validate_permissions(permissoes, route_permissions);
 
@@ -65,6 +73,7 @@ const ensureAuthenticated = (route_permissions?: string[]) => {
         cod_perfil,
         nome_perfil,
         cod_distribuidora,
+        distribuidora,
       };
 
       return next();

@@ -13,7 +13,7 @@ usuariosRouter.post(
 );
 
 usuariosRouter.put(
-  "/:cod_usuario",
+  "/usuario/:cod_usuario",
   ensureAuthenticated(["usuarios_editar"]),
   usuariosController.update,
 );
@@ -25,13 +25,13 @@ usuariosRouter.get(
 );
 
 usuariosRouter.get(
-  "/:cod_usuario",
+  "/usuario/:cod_usuario",
   ensureAuthenticated(["usuarios_visualizar"]),
   usuariosController.getone,
 );
 
 usuariosRouter.delete(
-  "/:cod_usuario",
+  "/usuario/:cod_usuario",
   ensureAuthenticated(["usuarios_deletar"]),
   usuariosController.delete,
 );

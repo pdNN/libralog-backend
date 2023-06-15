@@ -74,6 +74,7 @@ class UsuariosRepository implements IUsuariosRepository {
       },
       include: {
         perfil: true,
+        distribuidora: true,
       },
     });
 

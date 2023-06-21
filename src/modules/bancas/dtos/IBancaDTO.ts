@@ -1,5 +1,6 @@
 import { IDistribuidoraDTO } from "@modules/distribuidoras/dtos/IDistribuidoraDTO";
 import { IEntregadorDTO } from "@modules/entregadores/dtos/IEntregadorDTO";
+import { IFiscalDTO } from "@modules/fiscal/dtos/IFiscalDTO";
 
 export type IUpdateBancaDTO = {
   cod_banca: number;
@@ -56,4 +57,5 @@ export type IBancaDTO = {
   cod_distribuidora?: number;
   entregador?: IEntregadorDTO;
   cod_entregador?: number;
+  fiscal?: IFiscalDTO[];
 };

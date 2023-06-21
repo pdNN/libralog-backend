@@ -1,4 +1,5 @@
 import { IDistribuidoraDTO } from "@modules/distribuidoras/dtos/IDistribuidoraDTO";
+import { IFiscalDTO } from "@modules/fiscal/dtos/IFiscalDTO";
 
 export type IUpdateEditoraDTO = {
   cod_editora: number;
@@ -51,4 +52,5 @@ export type IEditoraDTO = {
   des_email: String;
   distribuidora?: IDistribuidoraDTO;
   cod_distribuidora: number;
+  fiscal?: IFiscalDTO[];
 };

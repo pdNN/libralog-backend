@@ -34,6 +34,14 @@ const permissionsModule: IPermissionModule[] = [
     module: "bancas",
     permissions: ["editar", "visualizar", "deletar"],
   },
+  {
+    module: "movimento",
+    permissions: ["editar", "visualizar", "deletar"],
+  },
+  {
+    module: "fiscal",
+    permissions: ["editar", "visualizar", "deletar"],
+  },
 ];
 
 export const validate_registred_permission = (route_permissions?: string[]) => {

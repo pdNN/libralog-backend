@@ -23,6 +23,7 @@ model Distribuidora {
   usuarios Usuario[]
   bancas   Banca[]
   editoras Editora[]
+  fiscal   Fiscal[]
 
   @@index([cod_distribuidora])
   @@map("distribuidora")
@@ -80,6 +81,8 @@ model Banca {
   entregador        Entregador    @relation(fields: [cod_entregador], references: [cod_entregador], onDelete: Cascade)
   cod_entregador    Int
 
+fiscal Fiscal[]
+
   @@index([cod_banca, cod_distribuidora, cod_entregador])
   @@map("banca")
 }
@@ -105,6 +108,7 @@ model Editora {
   cod_distribuidora Int
 
   revista Revista[]
+  fiscal Fiscal[]
 
   @@index([cod_editora, cod_distribuidora])
   @@map("editora")
@@ -126,6 +130,7 @@ model Entregador {
   dthr_atualizacao DateTime @updatedAt
 
   banca Banca[]
+  fiscal Fiscal[]
 
   @@index([cod_entregador])
   @@map("entregador")
@@ -141,6 +146,53 @@ model Revista {
   editora     Editora @relation(fields: [cod_editora], references: [cod_editora], onDelete: Cascade)
   cod_editora Int
 
+  fiscal Fiscal[]
+
   @@index([cod_revista])
   @@map("revista")
+}
+
+model Movimento{
+  cod_movimento     Int @id @default(autoincrement())
+  des_movimento     String
+  dthr_criacao      DateTime @default(now())
+  dthr_atualizacao  DateTime @updatedAt
+
+  fiscal Fiscal[]
+
+  @@index([cod_movimento])
+  @@map("movimento")
+
+}
+model Fiscal {
+  cod_documento    Int  @id @default(autoincrement())
+  cod_n_nfe        Int
+  nr_quantidade    Int
+  vlr_unitario     Float
+  vlr_total        Float
+  dthr_criacao     DateTime @default(now())
+  dthr_atualizacao DateTime @updatedAt
+  dthr_documento   DateTime
+
+  editora     Editora @relation(fields: [cod_editora], references: [cod_editora], onDelete: Cascade)
+  cod_editora Int
+
+  revista     Revista @relation(fields: [cod_revista], references: [cod_revista], onDelete: Cascade)
+  cod_revista Int
+
+  movimento    Movimento @relation(fields: [cod_movimento], references: [cod_movimento], onDelete: Cascade)
+  cod_movimento Int
+
+  entregador  Entregador @relation(fields: [cod_entregador], references: [cod_entregador], onDelete: Cascade)
+  cod_entregador Int
+
+  banca  Banca @relation(fields: [cod_banca], references: [cod_banca], onDelete: Cascade)
+  cod_banca Int
+
+  distribuidora     Distribuidora @relation(fields: [cod_distribuidora], references: [cod_distribuidora], onDelete: Cascade)
+  cod_distribuidora Int
+
+
+  @@index([cod_documento, cod_editora, cod_revista, cod_movimento, cod_entregador, cod_banca, cod_distribuidora])
+  @@map("fiscal")
 }

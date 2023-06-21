@@ -1,4 +1,5 @@
 import { IEditoraDTO } from "@modules/editoras/dtos/IEditoraDTO";
+import { IFiscalDTO } from "@modules/fiscal/dtos/IFiscalDTO";
 
 export type IUpdateRevistaDTO = {
   cod_revista: number;
@@ -21,4 +22,5 @@ export type IRevistaDTO = {
   dthr_atualizacao: Date;
   editora?: IEditoraDTO;
   cod_editora: number;
+  fiscal?: IFiscalDTO[];
 };

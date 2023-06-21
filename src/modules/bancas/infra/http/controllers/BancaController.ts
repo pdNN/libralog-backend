@@ -109,6 +109,7 @@ class BancaController {
     const bancaRepository = new BancaRepository();
     const distribuidoraRepository = new DistribuidoraRepository();
     const entregadorRepository = new EntregadorRepository();
+
     const createBanca = new CreateBancaService(
       bancaRepository,
       distribuidoraRepository,
